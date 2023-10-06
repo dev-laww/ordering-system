@@ -1,0 +1,17 @@
+import { NextRequest } from "next/server";
+import {{pascalCase name}}Controller from "@controller/{{kebabCase name}}.controller";
+
+
+describe("{{pascalCase name}}Controller", () => {
+let controller: {{pascalCase name}}Controller;
+let req: NextRequest;
+
+beforeEach(() => {
+controller = new {{pascalCase name}}Controller();
+});
+
+describe("Test method", () => {
+it.todo("write test");
+});
+});
+

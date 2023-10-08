@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String       @id @default(uuid())
+  email      String       @unique
+  firsName   String       @map("first_name")
+  lastName   String       @map("last_name")
+  password   String
+  confirmed  Boolean      @default(false)
+  role       Role         @default(user)
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  orders     Order[]
+  payments   Payment[]
+  addresses  Address[]
+  ItemRecord ItemRecord[]
+
+  @@map("users")
+}
+
+model Address {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  address   String
+  city      String
+  state     String
+  zip       String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("addresses")
+}
+
+model Item {
+  id        String       @id @default(uuid())
+  name      String
+  size      ItemSize     @default(small)
+  price     Float
+  stock     Int
+  quantity  Int
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  orders    OrderItems[]
+  records   ItemRecord[]
+
+  @@map("items")
+}
+
+model Order {
+  id         String       @id @default(uuid())
+  userId     String       @map("user_id")
+  status     Status       @default(pending)
+  quantity   Int
+  price      Float
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  user       User         @relation(fields: [userId], references: [id])
+  orderItems OrderItems[]
+  payment    Payment?
+
+  @@map("orders")
+}
+
+model OrderItems {
+  id        String   @id @default(uuid())
+  orderId   String   @map("order_id")
+  itemId    String   @map("item_id")
+  quantity  Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  order     Order    @relation(fields: [orderId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id])
+
+  @@map("order_items")
+}
+
+model Payment {
+  id        String      @id @default(uuid())
+  userId    String      @map("user_id")
+  orderId   String      @unique @map("order_id")
+  amount    Float
+  type      PaymentType @default(cash)
+  status    Status      @default(pending)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  user      User        @relation(fields: [userId], references: [id])
+  order     Order       @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+model ItemRecord {
+  id        String     @id @default(uuid())
+  item_id   String
+  quantity  Int
+  type      RecordType @default(restock)
+  createdBy String     @map("created_by")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  item      Item       @relation(fields: [item_id], references: [id])
+  user      User       @relation(fields: [createdBy], references: [id])
+
+  @@map("item_records")
+}
+
+// Enums
+enum RecordType {
+  restock
+  sale
+}
+
+enum PaymentType {
+  cash
+  ewallet
+}
+
+enum Status {
+  pending
+  completed
+  cancelled
+}
+
+enum ItemSize {
+  small
+  medium
+  large
+}
+
+enum Role {
+  admin
+  user
+}

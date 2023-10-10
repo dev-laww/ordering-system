@@ -56,8 +56,7 @@
 | id         | string | Order uid        |
 | user_id    | string | User uid         |
 | address_id | string | Address uid      |
-| status     | string | Order status     |
-| total      | float  | Order total      |
+| status      | string | Order status     |
 | created_at | date   | Order created_at |
 | updated_at | date   | Order updated_at |
 

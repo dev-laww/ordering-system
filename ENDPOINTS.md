@@ -12,6 +12,15 @@ List of all api endpoints.
     - [Reset Password](#reset-password)
     - [Verify Email](#verify-email)
     - [Resend Verification Email](#resend-verification-email)
+- [Profile](#profile)
+    - [Get Profile](#get-profile)
+    - [Update Profile](#update-profile)
+    - [Change Password](#change-password)
+    - [Get addresses](#get-addresses)
+    - [Add address](#add-address)
+    - [Get address](#get-address)
+    - [Update address](#update-address)
+    - [Delete address](#delete-address)
 - [Orders](#orders)
     - [Get Orders](#get-orders)
     - [Get Order](#get-order)
@@ -224,6 +233,222 @@ POST /auth/resend-verification-email
 {
   "status": "success",
   "message": "Verification email sent"
+}
+```
+
+## Profile
+- Requires authentication
+- Requires verified email
+
+### Get Profile
+
+```http request
+GET /profile
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Profile retrieved",
+  "data": {
+    "id": "<user-id>",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@mail.com",
+    "role": "user"
+  }
+}
+```
+
+### Update Profile
+
+```http request
+PUT /profile
+```
+
+#### Request
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Profile updated",
+  "data": {
+    "id": "<user-id>",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@mail.com",
+    "role": "user"
+  }
+}
+```
+
+### Change Password
+
+```http request
+PUT /profile/change-password
+```
+#### Request 
+
+```json
+{
+  "oldPassword": "oldsecretpassword",
+  "newPassword": "newsecretpassword",
+  "confirmPassword": "newsecretpassword"
+}
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Password changed"
+}
+```
+
+### Get addresses
+
+```http request
+GET /profile/addresses
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Addresses retrieved",
+  "data": [
+    {
+      "id": "<address-id>",
+      "address": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10001",
+      "createdAt": "2021-01-01T00:00:00.000Z",
+      "updatedAt": "2021-01-01T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+### Add address
+
+```http request
+POST /profile/addresses
+```
+
+#### Request
+
+```json
+{
+  "address": "123 Main St",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10001"
+}
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Address added",
+  "data": {
+    "id": "<address-id>",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2021-01-01T00:00:00.000Z"
+  }
+}
+```
+
+### Get address
+
+```http request
+GET /profile/addresses/<address-id>
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Address retrieved",
+  "data": {
+    "id": "<address-id>",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2021-01-01T00:00:00.000Z"
+  }
+}
+```
+
+### Update address
+
+```http request
+PUT /profile/addresses/<address-id>
+```
+
+#### Request
+
+```json
+{
+  "address": "123 Main St",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10001"
+}
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Address updated",
+  "data": {
+    "id": "<address-id>",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2021-01-01T00:00:00.000Z"
+  }
+}
+```
+
+### Delete address
+
+```http request
+DELETE /profile/addresses/<address-id>
+```
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "message": "Address deleted"
 }
 ```
 

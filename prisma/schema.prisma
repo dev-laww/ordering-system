@@ -38,6 +38,7 @@ model Address {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id])
+  orders    Order[]
 
   @@map("addresses")
 }
@@ -60,12 +61,13 @@ model Item {
 model Order {
   id         String       @id @default(uuid())
   userId     String       @map("user_id")
+  addressId  String       @map("address_id")
   status     Status       @default(pending)
-  quantity   Int
-  price      Float
+  total      Float
   createdAt  DateTime     @default(now()) @map("created_at")
   updatedAt  DateTime     @updatedAt @map("updated_at")
   user       User         @relation(fields: [userId], references: [id])
+  address    Address      @relation(fields: [addressId], references: [id])
   orderItems OrderItems[]
   payment    Payment?
 

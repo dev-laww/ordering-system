@@ -102,13 +102,13 @@ model Payment {
 
 model ItemRecord {
   id        String     @id @default(uuid())
-  item_id   String
+  itemId    String     @map("item_id")
   quantity  Int
   type      RecordType @default(restock)
   createdBy String     @map("created_by")
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @updatedAt @map("updated_at")
-  item      Item       @relation(fields: [item_id], references: [id])
+  item      Item       @relation(fields: [itemId], references: [id])
   user      User       @relation(fields: [createdBy], references: [id])
 
   @@map("item_records")

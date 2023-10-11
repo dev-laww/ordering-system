@@ -24,6 +24,7 @@ model User {
   payments   Payment[]
   addresses  Address[]
   ItemRecord ItemRecord[]
+  TokenOTP   TokenOTP[]
 
   @@map("users")
 }
@@ -114,6 +115,18 @@ model ItemRecord {
   user      User       @relation(fields: [createdBy], references: [id])
 
   @@map("item_records")
+}
+
+model TokenOTP {
+  id        Int      @id @default(autoincrement())
+  token     String
+  userId    String   @map("user_id")
+  type      String
+  createdAt DateTime @default(now()) @map("created_at")
+  expiredAt DateTime @map("expired_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("token_otp")
 }
 
 // Enums

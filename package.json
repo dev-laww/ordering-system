@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@prisma/client": "^5.4.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
+    "nodemailer": "^6.9.6",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "autoprefixer": "^10",

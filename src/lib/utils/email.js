@@ -10,7 +10,14 @@ const transporter = nodemailer.createTransport({
 
 // TODO: Create a template for email and add env variables
 
-
+/**
+ * Send an email
+ *
+ * @param to Recipient email
+ * @param subject Email subject
+ * @param html Email body
+ * @return {Promise<void>}
+ */
 const send = async (to, subject, html) => {
     try {
         await transporter.sendMail({

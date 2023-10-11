@@ -1,5 +1,13 @@
 import { sign, verify } from "jsonwebtoken";
 
+/**
+ * Generates a JWT token
+ *
+ * @param payload Payload to sign
+ * @param secret Secret to sign
+ * @param expiresIn Expiry time
+ * @return {string}
+ */
 export const generateToken = (
     payload,
     secret,
@@ -10,6 +18,13 @@ export const generateToken = (
     })
 }
 
+/**
+ * Verifies a JWT token
+ *
+ * @param token Token to verify
+ * @param secret Secret to verify
+ * @return {Promise<Object | null>}
+ */
 export const verifyToken = (
     token,
     secret

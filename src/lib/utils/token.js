@@ -1,6 +1,12 @@
 import { generateToken, verifyToken } from "@utils/jwt";
 import crypto from "crypto";
 
+/**
+ * Generates a JWT access token
+ *
+ * @param payload Payload to sign
+ * @return {string}
+ */
 export const generateAccessToken = (
     payload,
 ) => {
@@ -19,6 +25,12 @@ export const generateAccessToken = (
     );
 }
 
+/**
+ * Generates a JWT refresh token
+ *
+ * @param payload Payload to sign
+ * @return {string}
+ */
 export const generateRefreshToken = (
     payload,
 ) => {
@@ -37,6 +49,12 @@ export const generateRefreshToken = (
     );
 }
 
+/**
+ * Verifies a JWT access token
+ *
+ * @param token Token to verify
+ * @return {Promise<undefined|Object|null>}
+ */
 export const verifyAccessToken = async (
     token,
 ) => {
@@ -54,6 +72,12 @@ export const verifyAccessToken = async (
     }
 }
 
+/**
+ * Verifies a JWT refresh token
+ *
+ * @param token Token to verify
+ * @return {Promise<undefined|{}|null>}
+ */
 export const verifyRefreshToken = async (
     token,
 ) => {
@@ -71,16 +95,37 @@ export const verifyRefreshToken = async (
     }
 }
 
+/**
+ * Generates a random token
+ *
+ * @return {string}
+ */
 export const generateRandomToken = () => crypto.randomBytes(32).toString('hex');
 
+/**
+ * Generates a random OTP
+ *
+ * @return {string}
+ */
 export const generateOTP = () => crypto.randomInt(100000, 999999).toString();
 
+/**
+ * Generates a page token
+ * @param token Token to generate
+ * @return {string}
+ */
 export function generatePageToken(token) {
     const userJson = JSON.stringify(token);
 
     return Buffer.from(userJson).toString("base64");
 }
 
+/**
+ * Parses a page token
+ *
+ * @param token Token to parse
+ * @return {undefined|Object}
+ */
 export function parsePageToken(token) {
     try {
         const userJson = Buffer.from(token, "base64").toString("ascii");
@@ -90,15 +135,3 @@ export function parsePageToken(token) {
         return undefined;
     }
 }
-
-export function generateCouponCode(length = 10) {
-    const chars = "AaBbCcDdEeFfGgHhJjKkLlMmNnPpQqRrSsTtUuVvWwXxYyZz1234567890";
-    let coupon = "";
-
-    for (let i = 0; i < length; i++) {
-        coupon += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-
-    return coupon;
-}
-

@@ -3,6 +3,21 @@
     "paths": {
       "@src/*": [
         "./src/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@utils/*": [
+        "./src/lib/utils/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@controller/*": [
+        "./src/controller/*"
+      ],
+      "@repository/*": [
+        "./src/repository/*"
       ]
     }
   }

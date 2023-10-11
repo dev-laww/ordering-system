@@ -1,4 +1,3 @@
-import { UserSession } from "@lib/types";
 import { sign, verify } from "jsonwebtoken";
 
 export const generateToken = (

@@ -1,10 +1,9 @@
 import z from "zod";
 
 const Validators = {
-    testSchema: z.object({
-        name: z.string().min(2).max(255),
-        email: z.string().email(),
-        age: z.number().min(18).max(99),
+    login: z.object({
+        "email": z.string({ required_error: "Email or username is required" }),
+        "password": z.string({ required_error: "Password is required" })
     })
 }
 

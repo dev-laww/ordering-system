@@ -10,7 +10,7 @@ const Response = {
      * @param data Response data
      * @return {{response: {status: string, message: string, data: *}, status: number}}
      */
-    ok: (message = null, data = null) => ({
+    ok: (message = undefined, data = undefined) => ({
 
         status: STATUS_CODE.OK,
         response: {
@@ -44,7 +44,7 @@ const Response = {
      * @param errors Response errors
      * @return {{response: {code: string, message: string, errors, status: string}, status: number}}
      */
-    badRequest: (message, errors) => ({
+    badRequest: (message = undefined, errors) => ({
         status: STATUS_CODE.BAD_REQUEST,
         response: {
             code: ERROR_CODE.BAD_REQUEST,
@@ -106,7 +106,7 @@ const Response = {
      * @param message Response message
      * @return {{response: {code: string, message: string, errors: *, status: string}, status: number}}
      */
-    validationError: (errors, message) => {
+    validationError: (errors, message = undefined) => {
         const errorMessages = errors.map(error => error.message).join(", ");
         return {
             status: STATUS_CODE.UNPROCESSABLE_ENTITY,
@@ -181,6 +181,21 @@ export const getSession = async (req) => {
     const token = req.headers.get("Authorization").split(" ")[1];
 
     return (await verifyAccessToken(token));
+}
+
+/**
+ * Get body from request
+ *
+ * @param req
+ * @return {Promise<*|null>}
+ */
+export const getBody = async (req) => {
+    try {
+        return await req.json();
+    }
+    catch (e) {
+        return null;
+    }
 }
 
 export default Response;

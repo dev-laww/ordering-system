@@ -208,6 +208,71 @@ export default class UserRepository {
         .then(({ createdAt, updatedAt, userId, ...rest }) => rest);
     }
 
+    async getTokens(id) {
+        const user = await this.prismaClient.user.findUnique({
+            where: { id: id },
+            select: {
+                tokens: true
+            }
+        });
+
+        return user ? user.tokens.map(({ created_at, updated_at, user_id, ...rest }) => rest) : [];
+    }
+
+    async generateTokenOTP(id, token, type) {
+        return prisma.tokenOTP.create({
+            data: {
+                token: token,
+                type: type,
+                user_id: id,
+            },
+        });
+    }
+
+    async verifyTokenOTP(token, type) {
+        const tokenRecord = await prisma.tokenOTP.findFirst({
+            where: {
+                token: token,
+                type: type,
+            },
+            include: {
+                user: true,
+            }
+        });
+
+        if (!tokenRecord) return {
+            success: false,
+            data: {}
+        };
+
+        const tokenCreatedAt = new Date(tokenRecord.created_at);
+        const now = new Date();
+
+        if (now.getTime() - tokenCreatedAt.getTime() > TOKEN_OTP_EXPIRY) {
+            await prisma.tokenOTP.delete({
+                where: {
+                    id: tokenRecord.id
+                }
+            });
+
+            return {
+                success: false,
+                data: {}
+            };
+        }
+
+        await prisma.tokenOTP.delete({
+            where: {
+                id: tokenRecord.id
+            }
+        });
+
+        return {
+            success: true,
+            data: tokenRecord.user
+        };
+    }
+
     async verifyPassword(id, password) {
         const user = await this.prismaClient.user.findUnique({
             where: { id: id },

@@ -53,29 +53,29 @@ model Item {
   quantity  Int
   createdAt DateTime     @default(now()) @map("created_at")
   updatedAt DateTime     @updatedAt @map("updated_at")
-  orders    OrderItems[]
+  orders    OrderItem[]
   records   ItemRecord[]
 
   @@map("items")
 }
 
 model Order {
-  id         String       @id @default(uuid())
-  userId     String       @map("user_id")
-  addressId  String       @map("address_id")
-  status     Status       @default(pending)
+  id         String      @id @default(uuid())
+  userId     String      @map("user_id")
+  addressId  String      @map("address_id")
+  status     Status      @default(pending)
   total      Float
-  createdAt  DateTime     @default(now()) @map("created_at")
-  updatedAt  DateTime     @updatedAt @map("updated_at")
-  user       User         @relation(fields: [userId], references: [id])
-  address    Address      @relation(fields: [addressId], references: [id])
-  orderItems OrderItems[]
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+  user       User        @relation(fields: [userId], references: [id])
+  address    Address     @relation(fields: [addressId], references: [id])
+  orderItems OrderItem[]
   payment    Payment?
 
   @@map("orders")
 }
 
-model OrderItems {
+model OrderItem {
   id        String   @id @default(uuid())
   orderId   String   @map("order_id")
   itemId    String   @map("item_id")
@@ -131,6 +131,7 @@ model TokenOTP {
 
 // Enums
 enum RecordType {
+  create
   restock
   sale
 }

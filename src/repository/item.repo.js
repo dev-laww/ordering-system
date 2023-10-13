@@ -14,11 +14,11 @@ export default class ItemRepository {
 
     async getById(id){
         return this.prismaClient.item.findUnique({
-            where: { id: id },
+            where: { id },
         });
     }
 
-    async create(data) {
+    async create(data, createdBy) {
         let item = await this.prismaClient.item.create({
             data: data
         });
@@ -26,7 +26,9 @@ export default class ItemRepository {
         await this.prismaClient.itemRecord.create({
             data: {
                 itemId: item.id,
-                quantity: item.quantity
+                quantity: item.quantity,
+                createdBy,
+                type: "create"
             }
         });
 
@@ -42,15 +44,15 @@ export default class ItemRepository {
 
     async delete(id) {
         return this.prismaClient.item.delete({
-            where: { id: id }
+            where: { id }
         });
     }
 
-    async restock(id, quantity) {
+    async restock(id, quantity, createdBy) {
         let item = this.prismaClient.item.update({
-            where: { id: id },
+            where: { id },
             data: {
-                quantity: {
+                stock: {
                     increment: quantity
                 }
             }
@@ -59,7 +61,8 @@ export default class ItemRepository {
         await this.prismaClient.itemRecord.create({
             data: {
                 itemId: id,
-                quantity: data.quantity
+                quantity,
+                createdBy
             }
         });
 

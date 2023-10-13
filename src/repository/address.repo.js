@@ -37,15 +37,9 @@ export default class AddressRepository {
         });
     }
 
-    getAllUserAddresses(userId) {
+    async getAllUserAddresses(userId) {
         return this.prismaClient.address.findMany({
-            where: { userId: userId }
-        });
-    }
-
-    async deleteUserAddresses(userId) {
-        return this.prismaClient.address.deleteMany({
-            where: { userId: userId }
+            where: { userId }
         });
     }
 }

@@ -1,6 +1,6 @@
 import prisma from "@lib/prisma";
-import { hash } from "@utils/hashing";
-import { compare } from "bcryptjs";
+import { hash, compare } from "@utils/hashing";
+import { TOKEN_OTP_EXPIRY } from "@lib/constants";
 
 
 export default class UserRepository {
@@ -69,58 +69,6 @@ export default class UserRepository {
         });
     }
 
-    async getRole(id) {
-        const user = await this.prismaClient.user.findUnique({
-            where: { id: id },
-            select: {
-                role: true
-            }
-        });
-
-        return user ? user.role : null;
-    }
-
-    async updateRoles(id, roles) {
-        const userRoles = await this.getRoles(id).then(roles => roles.map(role => role.id));
-
-        const rolesToAdd = roles.filter(role => !userRoles.includes(role));
-        const rolesToRemove = userRoles.filter(role => !roles.includes(role));
-
-        return this.prismaClient.user.update({
-            where: { id: id },
-            data: {
-                roles: {
-                    create: rolesToAdd.map(role => ({ role_id: role })),
-                    deleteMany: rolesToRemove.map(role => ({ role_id: role }))
-                }
-            }
-        });
-    }
-
-    async getPayments(id) {
-        const user = await this.prismaClient.user.findUnique({
-            where: { id: id },
-            select: {
-                payments: true
-            }
-        });
-
-        return user ? user.payment_methods.map(({
-                                                    createdAt,
-                                                    updatedAt,
-                                                    userId,
-                                                    ...rest
-                                                }) => rest) : [];
-    }
-
-    async deletePayment(id) {
-        return this.prismaClient.paymentMethod.delete({
-            where: {
-                userId: id
-            }
-        });
-    }
-
     async getAddresses(id) {
         const user = await this.prismaClient.user.findUnique({
             where: { id: id },
@@ -163,69 +111,14 @@ export default class UserRepository {
         });
     }
 
-    async getReviews(id) {
-        const user = await this.prismaClient.user.findUnique({
-            where: { id: id },
-            select: {
-                reviews: true
-            }
-        })
-
-        return user ? user.reviews.map(({ createdAt, updatedAt, userId, ...rest }) => rest ) : [];
-    }
-
-    async deleteReviews(id) {
-        return this.prismaClient.review.deleteMany({
-            where: {
-                userId: id
-            }
-        });
-    }
-
-    async createPayment(id, orderId, type) {
-        const order = await this.prismaClient.order.findUnique({
-            where: { id: orderId }
-        });
-
-        if (!order) throw new Error("Order not found");
-
-        return this.prismaClient.user.update({
-            where: { id: id },
-            data: {
-                payments: {
-                    create: {
-                        orderId: orderId,
-                        type: type,
-                        amount: order.total,
-                    }
-                }
-            },
-            select: {
-                payments: true
-            }
-        })
-        .then(user => user.payments[0])
-        .then(({ createdAt, updatedAt, userId, ...rest }) => rest);
-    }
-
-    async getTokens(id) {
-        const user = await this.prismaClient.user.findUnique({
-            where: { id: id },
-            select: {
-                tokens: true
-            }
-        });
-
-        return user ? user.tokens.map(({ created_at, updated_at, user_id, ...rest }) => rest) : [];
-    }
-
     async generateTokenOTP(id, token, type) {
         return prisma.tokenOTP.create({
             data: {
-                token: token,
-                type: type,
-                user_id: id,
-            },
+                token,
+                type,
+                userId: id,
+                expiredAt: new Date(Date.now() + TOKEN_OTP_EXPIRY)
+            }
         });
     }
 
@@ -245,10 +138,10 @@ export default class UserRepository {
             data: {}
         };
 
-        const tokenCreatedAt = new Date(tokenRecord.created_at);
+        const tokenCreatedAt = new Date(tokenRecord.expiredAt);
         const now = new Date();
 
-        if (now.getTime() - tokenCreatedAt.getTime() > TOKEN_OTP_EXPIRY) {
+        if (now.getTime() > tokenCreatedAt.getTime()) {
             await prisma.tokenOTP.delete({
                 where: {
                     id: tokenRecord.id

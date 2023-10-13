@@ -14,7 +14,7 @@ export default class OrderRepository {
 
     async getById(id){
         return this.prismaClient.order.findUnique({
-            where: { id: id },
+            where: { id },
         });
     }
 

@@ -20,7 +20,7 @@ export default class PaymentRepository {
 
     async getByOrderId(orderId){
         return this.prismaClient.payment.findMany({
-            where: { order_id: orderId },
+            where: { orderId: orderId },
         });
     }
 
@@ -49,17 +49,17 @@ export default class PaymentRepository {
         });
     }
 
-    async success(id) {
+    async completed(id) {
         return this.prismaClient.payment.update({
             where: { id: id },
-            data: { status: "success" },
+            data: { status: "completed" },
         });
     }
 
-    async fail(id) {
+    async cancel(id) {
         return this.prismaClient.payment.update({
             where: { id: id },
-            data: { status: "failed" },
+            data: { status: "cancelled" },
         });
     }
 }

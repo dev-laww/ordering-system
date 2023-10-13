@@ -12,14 +12,14 @@ module.exports = {
         // repository
         {
             type: 'add',
-            path: '../src/repository/{{kebabCase name}}.repo.ts',
-            templateFile: 'templates/repository/repository.ts.hbs'
+            path: '../src/repository/{{kebabCase name}}.repo.js',
+            templateFile: 'templates/repository/repository.js.hbs'
         },
         // tests
         {
             type: 'add',
-            path: '../__test__/unit/repository/{{kebabCase name}}.repo.test.ts',
-            templateFile: 'templates/repository/test.repository.ts.hbs'
+            path: '../__test__/unit/repository/{{kebabCase name}}.repo.test.js',
+            templateFile: 'templates/repository/test.repository.js.hbs'
         }
     ]
 }

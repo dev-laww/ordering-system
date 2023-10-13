@@ -12,13 +12,13 @@ module.exports = {
         // controller
         {
             type: "add",
-            path: "../src/controller/{{kebabCase name}}.controller.ts",
-            templateFile: "templates/controller/controller.ts.hbs"
+            path: "../src/controller/{{kebabCase name}}.controller.js",
+            templateFile: "templates/controller/controller.js.hbs"
         },
         {
             type: "add",
-            path: "../src/lib/validator/{{kebabCase name}}.validator.ts",
-            templateFile: "templates/controller/validator.ts.hbs"
+            path: "../src/lib/validator/{{kebabCase name}}.validator.js",
+            templateFile: "templates/controller/validator.js.hbs"
         }
     ]
 }

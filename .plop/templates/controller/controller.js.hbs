@@ -1,0 +1,11 @@
+import { NextRequest } from "next/server";
+
+import Validators from "@lib/validator/{{kebabCase name}}.validator";
+import Response from "@lib/http";
+
+export default class {{pascalCase name}}Controller {
+
+    public async hello(req: NextRequest) {
+        return Response.ok("Hello World");
+    }
+}

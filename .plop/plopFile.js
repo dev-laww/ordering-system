@@ -1,4 +1,4 @@
-import { component, controller, repository } from './settings';
+const { component, controller, repository } = require('./settings');
 
 module.exports = function (plop) {
     plop.setGenerator('component', component);

@@ -10,7 +10,7 @@ const Response = {
      * @param data Response data
      * @return {{response: {status: string, message: string, data: *}, status: number}}
      */
-    ok: (message, data) => ({
+    ok: (message = null, data = null) => ({
 
         status: STATUS_CODE.OK,
         response: {

@@ -2,6 +2,9 @@
   "name": "ordering-system",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "dotenv -e .env.development.local node ./prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -22,6 +25,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "husky": "^8.0.3",

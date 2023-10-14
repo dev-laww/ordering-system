@@ -1,0 +1,178 @@
+[
+  {
+    "firstName": "Admin",
+    "lastName": "",
+    "email": "admin@mail.com",
+    "password": "$2a$10$zCIfV2tmfH//ix8CcIuZEOeWmxwvDheMLKZqsZS/61fG2kQpLVKDW",
+    "confirmed": true,
+    "role": "admin"
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "email": "alice.smith@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Emma",
+    "lastName": "Brown",
+    "email": "emma.brown@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Davis",
+    "email": "michael.davis@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Sophia",
+    "lastName": "Garcia",
+    "email": "sophia.garcia@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "James",
+    "lastName": "Wilson",
+    "email": "james.wilson@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Olivia",
+    "lastName": "Johnson",
+    "email": "olivia.johnson@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "William",
+    "lastName": "Smith",
+    "email": "william.smith@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Isabella",
+    "lastName": "Davis",
+    "email": "isabella.davis@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Benjamin",
+    "lastName": "Anderson",
+    "email": "benjamin.anderson@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Mia",
+    "lastName": "Martinez",
+    "email": "mia.martinez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Ethan",
+    "lastName": "Gonzalez",
+    "email": "ethan.gonzalez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Camila",
+    "lastName": "Miller",
+    "email": "camila.miller@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Alexander",
+    "lastName": "Lopez",
+    "email": "alexander.lopez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Abigail",
+    "lastName": "Hernandez",
+    "email": "abigail.hernandez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Moore",
+    "email": "daniel.moore@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Emily",
+    "lastName": "Gonzalez",
+    "email": "emily.gonzalez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Matthew",
+    "lastName": "Garcia",
+    "email": "matthew.garcia@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Harper",
+    "lastName": "Martinez",
+    "email": "harper.martinez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Aiden",
+    "lastName": "Taylor",
+    "email": "aiden.taylor@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Sofia",
+    "lastName": "Hernandez",
+    "email": "sofia.hernandez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Elijah",
+    "lastName": "Garcia",
+    "email": "elijah.garcia@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Scarlett",
+    "lastName": "Johnson",
+    "email": "scarlett.johnson@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Grayson",
+    "lastName": "Brown",
+    "email": "grayson.brown@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  },
+  {
+    "firstName": "Madison",
+    "lastName": "Lopez",
+    "email": "madison.lopez@example.com",
+    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
+    "confirmed": true
+  }
+]

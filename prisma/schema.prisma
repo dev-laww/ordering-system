@@ -40,7 +40,7 @@ model Address {
   phone     String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   orders    Order[]
 
   @@map("addresses")
@@ -67,10 +67,11 @@ model Order {
   addressId String      @map("address_id")
   status    Status      @default(pending)
   total     Float
+  reason    String?
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
-  user      User        @relation(fields: [userId], references: [id])
-  address   Address     @relation(fields: [addressId], references: [id])
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  address   Address     @relation(fields: [addressId], references: [id], onDelete: Cascade)
   items     OrderItem[]
   payment   Payment?
 
@@ -84,8 +85,8 @@ model OrderItem {
   quantity  Int
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  order     Order    @relation(fields: [orderId], references: [id])
-  item      Item     @relation(fields: [itemId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@map("order_items")
 }
@@ -97,10 +98,11 @@ model Payment {
   amount    Float
   type      PaymentType @default(cash)
   status    Status      @default(pending)
+  reason    String?
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
-  user      User        @relation(fields: [userId], references: [id])
-  order     Order       @relation(fields: [orderId], references: [id])
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map("payments")
 }
@@ -113,8 +115,8 @@ model ItemRecord {
   createdBy String     @map("created_by")
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @updatedAt @map("updated_at")
-  item      Item       @relation(fields: [itemId], references: [id])
-  user      User       @relation(fields: [createdBy], references: [id])
+  item      Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [createdBy], references: [id], onDelete: Cascade)
 
   @@map("item_records")
 }

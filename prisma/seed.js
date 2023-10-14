@@ -7,31 +7,41 @@ const nonRelationalData = [
 ]
 
 const seederMap = {
-    user: require('./seeders/users.json')
+    user: require('./seeders/users.json'),
+    address: require('./seeders/addresses.json')
+}
+
+async function seed(func, seeder) {
+    for (const data of seeder) {
+        try {
+            await func.create({ data });
+        } catch (e) {
+            console.error('--- Error seeding ---', e);
+        }
+    }
 }
 
 
 async function main() {
     for (const key in seederMap) {
         const seeder = seederMap[key];
+        const func = prisma[key];
+
+        console.log(`Seeding ${key}...`);
+
+        if (!func) {
+            console.log(`Seeder ${key} not found`);
+            continue;
+        }
 
         if (nonRelationalData.includes(key)) {
-            for (const data of seeder) {
-                const func = prisma[key];
-
-                if (!func) {
-                    console.log(`Seeder ${key} not found`);
-                    continue;
-                }
-
-                try {
-                    const res = await func.create({ data });
-                    console.log(res.id);
-                } catch (e) {
-                    console.log(e);
-                }
-            }
+            await seed(func, seeder);
+            continue;
         }
+
+        await seed(func, seeder);
+
+        console.log('Seeded complete');
     }
 }
 

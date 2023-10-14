@@ -1,0 +1,32 @@
+[
+  {
+    "id": "11625c92-d7e5-4e08-ad40-d1e041491959",
+    "userId": "8b06de91-1121-44b7-b230-b4eb085d7ff5",
+    "name": "Home",
+    "address": "123 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "phone": "212-555-1212"
+  },
+  {
+    "id": "a0b4b5c6-7d8e-4f9a-8b06-1121b230b4eb",
+    "userId": "8b06de91-1121-44b7-b230-b4eb085d7ff5",
+    "name": "Work",
+    "address": "456 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "phone": "212-555-1212"
+  },
+  {
+    "id": "b0b4b5c6-7d8e-4f9a-8b06-1121b230b4eb",
+    "userId": "8b06de91-1121-44b7-b230-b4eb085d7ff5",
+    "name": "Other",
+    "address": "789 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "phone": "212-555-1212"
+  }
+]

@@ -32,10 +32,12 @@ CREATE TABLE "users" (
 CREATE TABLE "addresses" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "zip" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 

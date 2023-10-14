@@ -13,6 +13,7 @@ const seederMap = {
     item: require('./seeders/items.json'),
     order: require('./seeders/orders.json'),
     orderItem: require('./seeders/order-items.json'),
+    payment: require('./seeders/payments.json'),
     itemRecord: require('./seeders/item-records.json'),
 }
 
@@ -21,7 +22,7 @@ async function seed(func, seeder) {
         try {
             await func.create({ data });
         } catch (e) {
-            console.error('--- Error seeding ---', e);
+            console.error('--- Error seeding ---\n', e);
         }
     }
 }

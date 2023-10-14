@@ -3,31 +3,35 @@ import prisma from "@lib/prisma";
 export default class OrderRepository {
     prismaClient = prisma;
 
-    async getAll(filters, limit = 50, cursor) {
+    async getAll(filters = undefined, limit = 50, cursor = undefined) {
         return this.prismaClient.order.findMany({
             cursor: cursor,
             take: limit,
             skip: cursor ? 1 : 0,
             where: filters,
+            include: { items: true }
         });
     }
 
     async getById(id){
         return this.prismaClient.order.findUnique({
             where: { id },
+            include: { items: true }
         });
     }
 
     async create(data) {
         return this.prismaClient.order.create({
-            data: data
+            data: data,
+            include: { items: true }
         });
     }
 
     async update(id, data) {
         return this.prismaClient.order.update({
             where: { id: id },
-            data: data
+            data: data,
+            include: { items: true }
         });
     }
 
@@ -40,6 +44,15 @@ export default class OrderRepository {
     async getOrderItems(orderId) {
         return this.prismaClient.orderItem.findMany({
             where: { orderId: orderId },
+            include: {
+                item: true
+            }
+        });
+    }
+
+    async getOrderItem(itemId) {
+        return this.prismaClient.orderItem.findUnique({
+            where: { id: itemId },
             include: {
                 item: true
             }

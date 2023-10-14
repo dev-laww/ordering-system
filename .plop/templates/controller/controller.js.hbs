@@ -5,7 +5,7 @@ import Response from "@lib/http";
 
 export default class {{pascalCase name}}Controller {
 
-    public async hello(req: NextRequest) {
+    async hello(req) {
         return Response.ok("Hello World");
     }
 }

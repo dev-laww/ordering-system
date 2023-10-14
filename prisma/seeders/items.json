@@ -1,0 +1,26 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "name": "Small Egg",
+    "price": 10.5,
+    "size": "small",
+    "stock": 10,
+    "quantity": 20
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000001",
+    "name": "Medium Egg",
+    "price": 15.5,
+    "size": "medium",
+    "stock": 10,
+    "quantity": 20
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000002",
+    "name": "Large Egg",
+    "price": 20.5,
+    "size": "large",
+    "stock": 10,
+    "quantity": 20
+  }
+]

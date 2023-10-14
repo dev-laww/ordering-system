@@ -3,12 +3,14 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const nonRelationalData = [
-    'user'
+    'user',
+    'item'
 ]
 
 const seederMap = {
     user: require('./seeders/users.json'),
-    address: require('./seeders/addresses.json')
+    address: require('./seeders/addresses.json'),
+    item: require('./seeders/items.json'),
 }
 
 async function seed(func, seeder) {

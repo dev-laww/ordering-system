@@ -225,7 +225,11 @@ export const isAllowed = async (req) => {
     const session = await getSession(req);
 
     if (!session) return Response.unauthorized("Invalid access token");
-    if (path.startsWith("/api/profile")) return Response.ok();
+    if (path.startsWith("/api/profile")) {
+        if (!session.confirmed) return Response.unauthorized("Please confirm your email address first");
+
+        return Response.ok();
+    }
 
     const { role } = session;
 

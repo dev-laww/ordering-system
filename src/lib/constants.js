@@ -94,22 +94,14 @@ export const PAYMENT_STATUS = ORDER_STATUS;
  * @type {string[]}
  */
 export const COMMON_RESOURCES = [
-    'GET/api/products',
-    'GET/api/products/:id',
-    'GET/api/products/:id/variants',
-    'GET/api/products/:id/reviews',
-    'GET/api/products/:id/categories',
-    'GET/api/variants',
-    'GET/api/variants/:id',
-    'GET/api/variants/:id/reviews',
-    'GET/api/variants/:id/reviews/:reviewId',
-    'GET/api/categories',
-    'GET/api/categories/:id',
-    'GET/api/categories/:id/products',
-    'GET/api/shipping-methods',
-    'GET/api/shipping-methods/:id',
-    'GET/api/coupons/:code'
+    'GET/api/items',
+    'GET/api/items/:id',
 ];
+
+export const USER_RESOURCES = [
+    'POST/api/orders',
+    'POST/api/orders/:id/cancel',
+]
 
 /**
  * Enum for payment method

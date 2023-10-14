@@ -1,4 +1,4 @@
-import { ERROR_CODE, STATUS, STATUS_CODE } from "@lib/constants";
+import { ERROR_CODE, STATUS, STATUS_CODE, COMMON_RESOURCES, USER_RESOURCES } from "@lib/constants";
 import { verifyAccessToken } from "@utils/token";
 
 
@@ -60,7 +60,7 @@ const Response = {
      * @param message Response message
      * @return {{response: {code: string, message: string, status: string}, status: number}}
      */
-    unauthorized: (message) => ({
+    unauthorized: (message = undefined) => ({
         status: STATUS_CODE.UNAUTHORIZED,
         response: {
             code: ERROR_CODE.UNAUTHORIZED,
@@ -180,7 +180,9 @@ const Response = {
 export const getSession = async (req) => {
     const token = req.headers.get("Authorization").split(" ")[1];
 
-    return (await verifyAccessToken(token));
+    if (!token) return null;
+
+    return await verifyAccessToken(token);
 }
 
 /**
@@ -192,10 +194,48 @@ export const getSession = async (req) => {
 export const getBody = async (req) => {
     try {
         return await req.json();
-    }
-    catch (e) {
+    } catch (e) {
         return null;
     }
+}
+
+const getRequestedResource = (resource, availableResources) => {
+    for (const available of availableResources) {
+        const pattern = available.toString().replace(/:[^/]+/g, '([^/]+)')
+        const regex = new RegExp(`^${ pattern }$`);
+
+        if (resource.match(regex)) return available;
+    }
+
+    return undefined;
+}
+
+export const isAllowed = async (req) => {
+    const path = req.nextUrl.pathname;
+    let token = req.headers.get("Authorization");
+    const resource = `${req.method}${path}`;
+
+    if (path.startsWith("/api/auth")) return Response.ok();
+
+    const common = getRequestedResource(resource, COMMON_RESOURCES);
+
+    if (common) return Response.ok();
+    if (!token) return Response.unauthorized("Please login first");
+
+    const session = await getSession(req);
+
+    if (!session) return Response.unauthorized("Invalid access token");
+    if (path.startsWith("/api/profile")) return Response.ok();
+
+    const { role } = session;
+
+    if (role === "admin") return Response.ok();
+
+    const userResource = getRequestedResource(resource, USER_RESOURCES);
+
+    if (userResource) return Response.ok();
+
+    return Response.forbidden;
 }
 
 export default Response;

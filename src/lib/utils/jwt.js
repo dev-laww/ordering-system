@@ -35,17 +35,10 @@ export const verifyToken = (
                 if (err || !decoded) {
                     return reject(err)
                 }
-                const userDecoded = decoded
-                // Now, convert decoded to UserSession by removing additional properties
-                const userSession = {
-                    id: userDecoded.id,
-                    email: userDecoded.email,
-                    username: userDecoded.username,
-                    first_name: userDecoded.first_name,
-                    last_name: userDecoded.last_name,
-                    image_url: userDecoded.image_url,
-                }
-                resolve(userSession)
+
+                const { iat, exp, ...session } = decoded
+
+                resolve(session)
             })
         } catch (err) {
             reject(err)

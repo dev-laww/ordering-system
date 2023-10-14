@@ -13,7 +13,7 @@ datasource db {
 model User {
   id         String       @id @default(uuid())
   email      String       @unique
-  firsName   String       @map("first_name")
+  firstName  String       @map("first_name")
   lastName   String       @map("last_name")
   password   String
   confirmed  Boolean      @default(false)

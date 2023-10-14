@@ -13,6 +13,7 @@ const seederMap = {
     item: require('./seeders/items.json'),
     order: require('./seeders/orders.json'),
     orderItem: require('./seeders/order-items.json'),
+    itemRecord: require('./seeders/item-records.json'),
 }
 
 async function seed(func, seeder) {

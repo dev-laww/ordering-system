@@ -2,10 +2,12 @@ import Validators from "@lib/validator/orders.validator";
 import Response, { getBody, isAllowed } from "@lib/http";
 import OrderRepository from "@repository/order.repo";
 import PaymentRepository from "@repository/payment.repo";
+import ItemRepository from "@repository/item.repo";
 
 export default class OrdersController {
     repo = new OrderRepository();
     paymentRepo = new PaymentRepository();
+    itemRepo = new ItemRepository();
 
     async orders(req) {
         const allowed = await isAllowed(req);
@@ -37,20 +39,28 @@ export default class OrdersController {
         let total = 0;
 
         for (const item of order.items) {
-            const res = await this.repo.getOrderItem(item.id);
+            const res = await this.itemRepo.getById(item.itemId);
 
             if (!res) return Response.badRequest("Item not found");
 
             total += res.price * item.quantity;
+
+            await this.itemRepo.sell(item.itemId, item.quantity, requestData.data.userId)
         }
 
         order.total = total;
+        const { items, ...orderData } = order;
 
-        const created = await this.repo.create(order);
+        const created = await this.repo.create({
+            ...orderData
+        });
+
+        created.items = await this.repo.createOrderItems(created.id, items);
 
         const payment = await this.paymentRepo.create({
             orderId: created.id,
-            method: paymentMethod,
+            userId: created.userId,
+            type: paymentMethod,
             amount: total
         });
 
@@ -77,15 +87,23 @@ export default class OrdersController {
 
         if (allowed.status !== 200) return allowed;
 
+        const body = await getBody(req);
+
+        if (!body) return Response.badRequest("Invalid request body");
+
+        const requestData = Validators.complete.safeParse(body);
+
+        if (!requestData.success) return Response.validationError(requestData.error.errors);
+
         const data = await this.repo.getById(params.id);
 
         if (!data) return Response.notFound("Order not found");
 
         if (data.status !== "pending") return Response.badRequest("Cannot complete order");
 
-        const updated = await this.repo.update(params.id, { status: "completed" });
+        const updated = await this.repo.update(params.id, { status: "completed", reason: requestData.data.reason });
 
-        return Response.ok("Order completed successfully", updated);
+        return Response.ok("Order completed", updated);
     }
 
     async cancel(req, params) {
@@ -93,15 +111,23 @@ export default class OrdersController {
 
         if (allowed.status !== 200) return allowed;
 
+        const body = await getBody(req);
+
+        if (!body) return Response.badRequest("Invalid request body");
+
+        const requestData = Validators.complete.safeParse(body);
+
+        if (!requestData.success) return Response.validationError(requestData.error.errors);
+
         const data = await this.repo.getById(params.id);
 
         if (!data) return Response.notFound("Order not found");
 
         if (data.status !== "pending") return Response.badRequest("Cannot cancel order");
 
-        const updated = await this.repo.update(params.id, { status: "cancelled" });
+        const updated = await this.repo.update(params.id, { status: "completed", reason: requestData.data.reason });
 
-        return Response.ok("Order cancelled successfully", updated);
+        return Response.ok("Order cancelled", updated);
     }
 
     async delete(req, params) {

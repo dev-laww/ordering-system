@@ -13,7 +13,7 @@ export default class OrderRepository {
         });
     }
 
-    async getById(id){
+    async getById(id) {
         return this.prismaClient.order.findUnique({
             where: { id },
             include: { items: true }
@@ -63,5 +63,23 @@ export default class OrderRepository {
         return this.prismaClient.order.findMany({
             where: { status: status }
         });
+    }
+
+    async createOrderItems(orderId, items) {
+        const data = [];
+
+        for (const item of items) {
+            const itemData = await this.prismaClient.orderItem.create({
+                data: {
+                    orderId,
+                    itemId: item.itemId,
+                    quantity: item.quantity
+                }
+            });
+
+            data.push(itemData);
+        }
+
+        return data;
     }
 }

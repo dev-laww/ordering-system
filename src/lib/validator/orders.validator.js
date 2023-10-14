@@ -6,9 +6,15 @@ const Validators = {
         addressId: z.string().uuid(),
         paymentMethod: z.enum(["ewallet", "cash"]),
         items: z.array(z.object({
-            id: z.string().uuid(),
+            itemId: z.string().uuid(),
             quantity: z.number().int().positive(),
         }))
+    }),
+    complete: z.object({
+        reason: z.string()
+    }),
+    cancel: z.object({
+        reason: z.string()
     })
 }
 

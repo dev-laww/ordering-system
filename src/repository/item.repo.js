@@ -68,4 +68,26 @@ export default class ItemRepository {
 
         return item;
     }
+
+    async sell(id, quantity, createdBy) {
+        let item = this.prismaClient.item.update({
+            where: { id },
+            data: {
+                stock: {
+                    decrement: quantity
+                }
+            }
+        });
+
+        await this.prismaClient.itemRecord.create({
+            data: {
+                itemId: id,
+                quantity: -quantity,
+                type: "sale",
+                createdBy
+            }
+        });
+
+        return item;
+    }
 }

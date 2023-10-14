@@ -1,6 +1,6 @@
 [
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff5",
+    "id": "00000000-0000-0000-0000-000000000000",
     "firstName": "Admin",
     "lastName": "",
     "email": "admin@mail.com",
@@ -9,7 +9,7 @@
     "role": "admin"
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff6",
+    "id": "00000000-0000-0000-0000-000000000001",
     "firstName": "Alice",
     "lastName": "Smith",
     "email": "alice.smith@example.com",
@@ -17,7 +17,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff7",
+    "id": "00000000-0000-0000-0000-000000000002",
     "firstName": "Emma",
     "lastName": "Brown",
     "email": "emma.brown@example.com",
@@ -25,7 +25,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff8",
+    "id": "00000000-0000-0000-0000-000000000003",
     "firstName": "Michael",
     "lastName": "Davis",
     "email": "michael.davis@example.com",
@@ -33,7 +33,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff9",
+    "id": "00000000-0000-0000-0000-000000000004",
     "firstName": "Sophia",
     "lastName": "Garcia",
     "email": "sophia.garcia@example.com",
@@ -41,7 +41,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff0",
+    "id": "00000000-0000-0000-0000-000000000005",
     "firstName": "James",
     "lastName": "Wilson",
     "email": "james.wilson@example.com",
@@ -49,7 +49,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff1",
+    "id": "00000000-0000-0000-0000-000000000006",
     "firstName": "Olivia",
     "lastName": "Johnson",
     "email": "olivia.johnson@example.com",
@@ -57,7 +57,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff2",
+    "id": "00000000-0000-0000-0000-000000000007",
     "firstName": "William",
     "lastName": "Smith",
     "email": "william.smith@example.com",
@@ -65,7 +65,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff3",
+    "id": "00000000-0000-0000-0000-000000000008",
     "firstName": "Isabella",
     "lastName": "Davis",
     "email": "isabella.davis@example.com",
@@ -73,7 +73,7 @@
     "confirmed": true
   },
   {
-    "id": "8b06de91-1121-44b7-b230-b4eb085d7ff4",
+    "id": "00000000-0000-0000-0000-000000000009",
     "firstName": "Benjamin",
     "lastName": "Anderson",
     "email": "benjamin.anderson@example.com",
@@ -81,7 +81,7 @@
     "confirmed": true
   },
   {
-    "id": "8a06de91-1121-44b7-b230-b4eb085d7ff5",
+    "id": "00000000-0000-0000-0000-000000000010",
     "firstName": "Mia",
     "lastName": "Martinez",
     "email": "mia.martinez@example.com",
@@ -89,7 +89,7 @@
     "confirmed": true
   },
   {
-    "id": "8a06de91-1121-44b7-b230-b4eb085d7ff6",
+    "id": "00000000-0000-0000-0000-000000000011",
     "firstName": "Ethan",
     "lastName": "Gonzalez",
     "email": "ethan.gonzalez@example.com",
@@ -97,7 +97,7 @@
     "confirmed": true
   },
   {
-    "id": "8a06de91-1121-44b7-b230-b4eb085d7ff7",
+    "id": "00000000-0000-0000-0000-000000000012",
     "firstName": "Camila",
     "lastName": "Miller",
     "email": "camila.miller@example.com",
@@ -105,7 +105,7 @@
     "confirmed": true
   },
   {
-    "id": "8a06de91-1121-44b7-b230-b4eb085d7ff8",
+    "id": "00000000-0000-0000-0000-000000000013",
     "firstName": "Alexander",
     "lastName": "Lopez",
     "email": "alexander.lopez@example.com",
@@ -113,7 +113,7 @@
     "confirmed": true
   },
   {
-    "id": "8a06de91-1121-44b7-b230-b4eb085d7ff9",
+    "id": "00000000-0000-0000-0000-000000000014",
     "firstName": "Abigail",
     "lastName": "Hernandez",
     "email": "abigail.hernandez@example.com",
@@ -121,7 +121,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff0",
+    "id": "00000000-0000-0000-0000-000000000016",
     "firstName": "Daniel",
     "lastName": "Moore",
     "email": "daniel.moore@example.com",
@@ -129,7 +129,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff1",
+    "id": "00000000-0000-0000-0000-00000000000017",
     "firstName": "Emily",
     "lastName": "Gonzalez",
     "email": "emily.gonzalez@example.com",
@@ -137,7 +137,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff2",
+    "id": "00000000-0000-0000-0000-000000000018",
     "firstName": "Matthew",
     "lastName": "Garcia",
     "email": "matthew.garcia@example.com",
@@ -145,7 +145,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff3",
+    "id": "00000000-0000-0000-0000-000000000019",
     "firstName": "Harper",
     "lastName": "Martinez",
     "email": "harper.martinez@example.com",
@@ -153,7 +153,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff4",
+    "id": "00000000-0000-0000-0000-000000000020",
     "firstName": "Aiden",
     "lastName": "Taylor",
     "email": "aiden.taylor@example.com",
@@ -161,7 +161,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff5",
+    "id": "00000000-0000-0000-0000-000000000021",
     "firstName": "Sofia",
     "lastName": "Hernandez",
     "email": "sofia.hernandez@example.com",
@@ -169,7 +169,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff6",
+    "id": "00000000-0000-0000-0000-000000000022",
     "firstName": "Elijah",
     "lastName": "Garcia",
     "email": "elijah.garcia@example.com",
@@ -177,7 +177,7 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff7",
+    "id": "00000000-0000-0000-0000-000000000023",
     "firstName": "Scarlett",
     "lastName": "Johnson",
     "email": "scarlett.johnson@example.com",
@@ -185,18 +185,10 @@
     "confirmed": true
   },
   {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff8",
+    "id": "00000000-0000-0000-0000-000000000024",
     "firstName": "Grayson",
     "lastName": "Brown",
     "email": "grayson.brown@example.com",
-    "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
-    "confirmed": true
-  },
-  {
-    "id": "d0b6de91-1121-44b7-b230-b4eb085d7ff9",
-    "firstName": "Madison",
-    "lastName": "Lopez",
-    "email": "madison.lopez@example.com",
     "password": "$2a$10$FyDL9cB8vaD9U/XF4Q81A.m2W26BHjT/fXkjw1xQtgKQ4z6dH7/Zu",
     "confirmed": true
   }

@@ -12,6 +12,7 @@ const seederMap = {
     address: require('./seeders/addresses.json'),
     item: require('./seeders/items.json'),
     order: require('./seeders/orders.json'),
+    orderItem: require('./seeders/order-items.json'),
 }
 
 async function seed(func, seeder) {
@@ -44,8 +45,9 @@ async function main() {
 
         await seed(func, seeder);
 
-        console.log('Seeding complete');
     }
+
+    console.log('Seeding complete');
 }
 
 

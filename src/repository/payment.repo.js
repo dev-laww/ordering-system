@@ -3,7 +3,7 @@ import prisma from "@lib/prisma";
 export default class PaymentRepository {
     prismaClient = prisma;
 
-    async getAll(filter, limit = 50, cursor) {
+    async getAll(filter = undefined, limit = 50, cursor = undefined) {
         return this.prismaClient.payment.findMany({
             cursor: cursor,
             take: limit,
@@ -49,10 +49,10 @@ export default class PaymentRepository {
         });
     }
 
-    async completed(id) {
+    async completed(id, reason) {
         return this.prismaClient.payment.update({
             where: { id: id },
-            data: { status: "completed" },
+            data: { status: "completed", reason },
         });
     }
 

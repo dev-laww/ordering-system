@@ -55,6 +55,7 @@ export default class PaymentsController {
         const payment = await this.repo.getById(params.id);
 
         if (!payment) return Response.notFound("Payment not found");
+        if (payment.status !== "pending") return Response.badRequest("Payment is not pending");
 
         const updated = await this.repo.update(params.id, { status: "completed" });
 

@@ -12,6 +12,8 @@ export default class ItemsController {
 
         const items = await this.repo.getAll();
 
+        if (!items.length) return Response.notFound('No items found');
+
         return Response.ok('Items retrieved successfully', items);
     }
 

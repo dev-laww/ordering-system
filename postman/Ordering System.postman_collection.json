@@ -1,0 +1,2868 @@
+{
+	"info": {
+		"_postman_id": "6631250d-e8fa-4b22-a555-60cc94c667f8",
+		"name": "Ordering System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20011538"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Admin\",\r\n    \"lastName\": \"User\",\r\n    \"email\": \"rorensuuu@gmail.com\",\r\n    \"password\": \"supersecretpassword\",\r\n    \"confirmPassword\": \"supersecretpassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Admin\",\r\n    \"lastName\": \"User\",\r\n    \"email\": \"rorensuuu@gmail.com\",\r\n    \"password\": \"supersecretpassword\",\r\n    \"confirmPassword\": \"supersecretpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 06:57:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Signup successful\",\n    \"data\": {\n        \"id\": \"557fc2a5-5698-4853-886d-e8df836fcdc1\",\n        \"firstName\": \"Admin\",\n        \"lastName\": \"User\",\n        \"email\": \"rorensuuu@gmail.com\",\n        \"role\": \"user\",\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1N2ZjMmE1LTU2OTgtNDg1My04ODZkLWU4ZGY4MzZmY2RjMSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJVc2VyIiwiZW1haWwiOiJyb3JlbnN1dXVAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTcyNjY2NjMsImV4cCI6MTY5NzI2NzU2M30.oi6UIxB5pcxH0SXiXHvzOUIulMbXJinvagxvO7B_uL0\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1N2ZjMmE1LTU2OTgtNDg1My04ODZkLWU4ZGY4MzZmY2RjMSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJVc2VyIiwiZW1haWwiOiJyb3JlbnN1dXVAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTcyNjY2NjMsImV4cCI6MTY5Nzg3MTQ2M30.yzT4zLEEYeorlVC5e10qoMqBs3RQCDPPegXCMKoOCbM\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var statusCode = pm.response.code;\r",
+									"var jsonData = pm.response.json();\r",
+									"if(statusCode==200 || statusCode==201){\r",
+									"    pm.environment.set(\"access_token\", jsonData.data.accessToken);\r",
+									"    pm.environment.set(\"refresh_token\", jsonData.data.refreshToken);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 06:38:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"id\": \"5ea8a2fa-76dc-426d-a5ac-25f7d2e20a70\",\n        \"email\": \"admin@mail.com\",\n        \"firstName\": \"Admin\",\n        \"lastName\": \"\",\n        \"role\": \"admin\",\n        \"confirmed\": true,\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYThhMmZhLTc2ZGMtNDI2ZC1hNWFjLTI1ZjdkMmUyMGE3MCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiIiwicm9sZSI6ImFkbWluIiwiY29uZmlybWVkIjp0cnVlLCJpYXQiOjE2OTcyNjU1MjAsImV4cCI6MTY5NzI2NjQyMH0.OYkQFOc32hRipvag2fp5uI-kSj5d4O8zgxkyDbrL3wk\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYThhMmZhLTc2ZGMtNDI2ZC1hNWFjLTI1ZjdkMmUyMGE3MCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiIiwicm9sZSI6ImFkbWluIiwiY29uZmlybWVkIjp0cnVlLCJpYXQiOjE2OTcyNjU1MjAsImV4cCI6MTY5Nzg3MDMyMH0.3cPvMSqIrX9FXNA4frJ_mLDYWNVwoKl4bedkeeqAtkU\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"otp\",\r\n    \"email\": \"rorensuuu@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forgot-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"rorensuuu@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/reset-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"reset-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "\"pnhlni54tj1t\""
+								},
+								{
+									"key": "content-length",
+									"value": "65"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 03 Aug 2023 07:53:22 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Password reset sent successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Confirm Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"otp\",\r\n    \"token\": \"456009\",\r\n    \"password\": \"password\",\r\n    \"confirmPassword\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/reset-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\": \"26fde5a38a36ac08dd8d9c3171b25b15a124a84d9c6dacbb394bee402bcc243b\",\r\n    \"password\": \"password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/confirm-reset-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"confirm-reset-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "\"4zqo3k591z1q\""
+								},
+								{
+									"key": "content-length",
+									"value": "62"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 03 Aug 2023 07:56:30 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Password changed successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"token\",\r\n    \"token\": \"abcab7746a7ff4d04e0e1d569e2efb07900daf80fc6fb0895af595b2ee0f42e1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/verify-email",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"verify-email"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"token\",\r\n    \"token\": \"78511edcd4f5d23f09a23714979cb0242accbf446db05b96790edae090457186\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/confirm-email",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"confirm-email"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "\"3h7lxj5qmm1p\""
+								},
+								{
+									"key": "content-length",
+									"value": "61"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 03 Aug 2023 08:11:49 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Email confirmed successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Resend Verification Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"token\",\r\n    \"email\": \"rorensuuu@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/resend-verification-email",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"resend-verification-email"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"token\",\r\n    \"email\": \"rorensuuu@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/resend-confirmation-email",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"resend-confirmation-email"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "\"4s608yi1431x\""
+								},
+								{
+									"key": "content-length",
+									"value": "69"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 03 Aug 2023 08:12:41 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Email confirmation sent successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var statusCode = pm.response.code;\r",
+									"var jsonData = pm.response.json();\r",
+									"if(statusCode==200 || statusCode==201){\r",
+									"    pm.environment.set(\"access_token\", jsonData.data.accessToken);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"{{refresh_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\": \"{{refreshToken}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/refresh",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"refresh"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "\"95w08gn6r5a6\""
+								},
+								{
+									"key": "content-length",
+									"value": "366"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 03 Aug 2023 08:21:49 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Token refreshed successfully\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMCwiZW1haWwiOiJ0b3Jhb29vLjEwMDZAZ21haWwuY29tIiwidXNlcm5hbWUiOiJhZG1pbiIsImZpcnN0X25hbWUiOiJBZG1pbiIsImxhc3RfbmFtZSI6IiIsImltYWdlX3VybCI6IiIsImlhdCI6MTY5MTA1MDkwOSwiZXhwIjoxNjkxMDUxODA5fQ.o4ywe3oMRzbB8iVTFjTfEtE2SYHBUxPtA3vjHtXHjFE\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Addresses",
+					"item": [
+						{
+							"name": "Get Adresses",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/addresses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"addresses"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/profile/addresses",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"profile",
+												"addresses"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "vary",
+											"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+										},
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 14 Oct 2023 12:39:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Addresses\",\n    \"data\": [\n        {\n            \"id\": \"11625c92-d7e5-4e08-ad40-d1e041491959\",\n            \"userId\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n            \"name\": \"Home\",\n            \"address\": \"123 Main Street\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"zip\": \"10001\",\n            \"phone\": \"212-555-1212\",\n            \"createdAt\": \"2023-10-14T12:31:18.353Z\",\n            \"updatedAt\": \"2023-10-14T12:31:18.353Z\"\n        },\n        {\n            \"id\": \"a0b4b5c6-7d8e-4f9a-8b06-1121b230b4eb\",\n            \"userId\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n            \"name\": \"Work\",\n            \"address\": \"456 Main Street\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"zip\": \"10001\",\n            \"phone\": \"212-555-1212\",\n            \"createdAt\": \"2023-10-14T12:31:18.356Z\",\n            \"updatedAt\": \"2023-10-14T12:31:18.356Z\"\n        },\n        {\n            \"id\": \"b0b4b5c6-7d8e-4f9a-8b06-1121b230b4eb\",\n            \"userId\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n            \"name\": \"Other\",\n            \"address\": \"789 Main Street\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"zip\": \"10001\",\n            \"phone\": \"212-555-1212\",\n            \"createdAt\": \"2023-10-14T12:31:18.357Z\",\n            \"updatedAt\": \"2023-10-14T12:31:18.357Z\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Add address",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Home 2\",\r\n    \"address\": \"123 Main Street\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zip\": \"10001\",\r\n    \"phone\": \"212-555-1213\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/addresses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"addresses"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Home 2\",\r\n    \"address\": \"123 Main Street\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zip\": \"10001\",\r\n    \"phone\": \"212-555-1213\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/profile/addresses",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"profile",
+												"addresses"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "vary",
+											"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+										},
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 14 Oct 2023 12:47:45 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Address added successfully\",\n    \"data\": {\n        \"id\": \"a617332d-8440-4a95-8e43-2af6bf089dd8\",\n        \"userId\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n        \"name\": \"Home\",\n        \"address\": \"123 Main Street\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"zip\": \"10001\",\n        \"phone\": \"212-555-1213\",\n        \"createdAt\": \"2023-10-14T12:47:45.159Z\",\n        \"updatedAt\": \"2023-10-14T12:47:45.159Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/profile/addresses/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11625c92-d7e5-4e08-ad40-d1e041491959"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/profile/addresses/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"profile",
+												"addresses",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "11625c92-d7e5-4e08-ad40-d1e041491959"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "vary",
+											"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+										},
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 14 Oct 2023 12:57:53 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Address\",\n    \"data\": {\n        \"id\": \"11625c92-d7e5-4e08-ad40-d1e041491959\",\n        \"userId\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n        \"name\": \"Home\",\n        \"address\": \"123 Main Street\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"zip\": \"10001\",\n        \"phone\": \"212-555-1212\",\n        \"createdAt\": \"2023-10-14T12:51:19.534Z\",\n        \"updatedAt\": \"2023-10-14T12:51:19.534Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Address",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Home Updated\",\r\n    \"address\": \"123 Main Street\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zip\": \"10001\",\r\n    \"phone\": \"212-555-1233\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/addresses/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11625c92-d7e5-4e08-ad40-d1e041491959"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Home Updated\",\r\n    \"address\": \"123 Main Street\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zip\": \"10001\",\r\n    \"phone\": \"212-555-1233\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/profile/addresses/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"profile",
+												"addresses",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "11625c92-d7e5-4e08-ad40-d1e041491959"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "vary",
+											"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+										},
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 14 Oct 2023 13:01:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Address updated successfully\",\n    \"data\": {\n        \"id\": \"11625c92-d7e5-4e08-ad40-d1e041491959\",\n        \"userId\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n        \"name\": \"Home Updated\",\n        \"address\": \"123 Main Street\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"zip\": \"10001\",\n        \"phone\": \"212-555-1233\",\n        \"createdAt\": \"2023-10-14T12:51:19.534Z\",\n        \"updatedAt\": \"2023-10-14T13:01:58.774Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Address",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/profile/addresses/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11625c92-d7e5-4e08-ad40-d1e041491959"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/profile/addresses/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"profile",
+												"addresses",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "11625c92-d7e5-4e08-ad40-d1e041491959"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "vary",
+											"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+										},
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 14 Oct 2023 13:04:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Address deleted successfully\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 12:48:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Profile\",\n    \"data\": {\n        \"id\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n        \"email\": \"admin@mail.com\",\n        \"firstName\": \"Admin\",\n        \"lastName\": \"\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Updated\",\r\n    \"lastName\": \"Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Updated\",\r\n    \"lastName\": \"Updated\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 12:49:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Profile updated successfully\",\n    \"data\": {\n        \"id\": \"8b06de91-1121-44b7-b230-b4eb085d7ff5\",\n        \"email\": \"admin@mail.com\",\n        \"firstName\": \"Updated\",\n        \"lastName\": \"Updated\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var statusCode = pm.response.code;\r",
+									"var jsonData = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"if (statusCode == 200 || statusCode == 201) {\r",
+									"    pm.environment.set('password', jsonData.newPassword)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"{{password}}\",\r\n    \"newPassword\": \"newsecretpassword\",\r\n    \"confirmPassword\": \"newsecretpassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/profile/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"change-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"oldPassword\": \"{{password}}\",\r\n    \"newPassword\": \"newsecretpassword\",\r\n    \"confirmPassword\": \"newsecretpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/change-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"change-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 12:50:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Password updated successfully\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 14:17:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Orders\",\n    \"data\": [\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n            \"status\": \"pending\",\n            \"total\": 150.75,\n            \"createdAt\": \"2023-10-14T13:49:24.223Z\",\n            \"updatedAt\": \"2023-10-14T13:49:24.223Z\",\n            \"items\": [\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000000\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.229Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.229Z\"\n                },\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000001\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000001\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.232Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.232Z\"\n                },\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000002\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000002\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.234Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.234Z\"\n                }\n            ]\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000001\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n            \"status\": \"completed\",\n            \"total\": 150.75,\n            \"createdAt\": \"2023-10-14T13:49:24.226Z\",\n            \"updatedAt\": \"2023-10-14T13:49:24.226Z\",\n            \"items\": [\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000003\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000001\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.234Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.234Z\"\n                },\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000004\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000001\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000001\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.235Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.235Z\"\n                },\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000005\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000001\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000002\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.236Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.236Z\"\n                }\n            ]\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000002\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n            \"status\": \"cancelled\",\n            \"total\": 150.75,\n            \"createdAt\": \"2023-10-14T13:49:24.227Z\",\n            \"updatedAt\": \"2023-10-14T13:49:24.227Z\",\n            \"items\": [\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000006\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000002\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.237Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.237Z\"\n                },\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000007\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000002\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000001\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.238Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.238Z\"\n                },\n                {\n                    \"id\": \"00000000-0000-0000-0000-000000000008\",\n                    \"orderId\": \"00000000-0000-0000-0000-000000000002\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000002\",\n                    \"quantity\": 10,\n                    \"createdAt\": \"2023-10-14T13:49:24.239Z\",\n                    \"updatedAt\": \"2023-10-14T13:49:24.239Z\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"addressId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"paymentMethod\": \"cash\",\r\n    \"items\": [\r\n        {\r\n            \"itemId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"quantity\": 5\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"addressId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"paymentMethod\": \"cash\",\r\n    \"items\": [\r\n        {\r\n            \"itemId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"quantity\": 5\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 14:57:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Order created successfully\",\n    \"data\": {\n        \"order\": {\n            \"id\": \"2e429776-5261-4358-a6dc-c044e46aa9b7\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n            \"status\": \"pending\",\n            \"total\": 52.5,\n            \"createdAt\": \"2023-10-14T14:57:04.193Z\",\n            \"updatedAt\": \"2023-10-14T14:57:04.193Z\",\n            \"items\": [\n                {\n                    \"id\": \"de0e72f0-5deb-46c1-bd9c-b8609b443c35\",\n                    \"orderId\": \"2e429776-5261-4358-a6dc-c044e46aa9b7\",\n                    \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                    \"quantity\": 5,\n                    \"createdAt\": \"2023-10-14T14:57:04.200Z\",\n                    \"updatedAt\": \"2023-10-14T14:57:04.200Z\"\n                }\n            ]\n        },\n        \"payment\": {\n            \"id\": \"f388a91a-0b68-4c4f-8082-4c490d587683\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"orderId\": \"2e429776-5261-4358-a6dc-c044e46aa9b7\",\n            \"amount\": 52.5,\n            \"type\": \"cash\",\n            \"status\": \"pending\",\n            \"createdAt\": \"2023-10-14T14:57:04.203Z\",\n            \"updatedAt\": \"2023-10-14T14:57:04.203Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 15:00:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Order\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"userId\": \"00000000-0000-0000-0000-000000000000\",\n        \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n        \"status\": \"pending\",\n        \"total\": 150.75,\n        \"createdAt\": \"2023-10-14T14:57:02.275Z\",\n        \"updatedAt\": \"2023-10-14T14:57:02.275Z\",\n        \"items\": [\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000000\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T14:57:02.281Z\",\n                \"updatedAt\": \"2023-10-14T14:57:02.281Z\"\n            },\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000001\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000001\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T14:57:02.284Z\",\n                \"updatedAt\": \"2023-10-14T14:57:02.284Z\"\n            },\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000002\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000002\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T14:57:02.285Z\",\n                \"updatedAt\": \"2023-10-14T14:57:02.285Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reason\": \"Cancelled\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/:id/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								":id",
+								"cancel"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\": \"Cancelled\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/orders/:id/cancel",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										":id",
+										"cancel"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 15:16:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Order cancelled\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"userId\": \"00000000-0000-0000-0000-000000000000\",\n        \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n        \"status\": \"completed\",\n        \"total\": 150.75,\n        \"reason\": \"Cancelled\",\n        \"createdAt\": \"2023-10-14T15:16:42.288Z\",\n        \"updatedAt\": \"2023-10-14T15:16:57.779Z\",\n        \"items\": [\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000000\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T15:16:42.295Z\",\n                \"updatedAt\": \"2023-10-14T15:16:42.295Z\"\n            },\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000001\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000001\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T15:16:42.297Z\",\n                \"updatedAt\": \"2023-10-14T15:16:42.297Z\"\n            },\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000002\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000002\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T15:16:42.298Z\",\n                \"updatedAt\": \"2023-10-14T15:16:42.298Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Complete Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reason\": \"Completed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/:id/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								":id",
+								"complete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\": \"Completed\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/orders/:id/complete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										":id",
+										"complete"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 15:18:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Order completed\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"userId\": \"00000000-0000-0000-0000-000000000000\",\n        \"addressId\": \"00000000-0000-0000-0000-000000000000\",\n        \"status\": \"completed\",\n        \"total\": 150.75,\n        \"reason\": \"Completed\",\n        \"createdAt\": \"2023-10-14T15:18:41.230Z\",\n        \"updatedAt\": \"2023-10-14T15:18:43.129Z\",\n        \"items\": [\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000000\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T15:18:41.236Z\",\n                \"updatedAt\": \"2023-10-14T15:18:41.236Z\"\n            },\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000001\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000001\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T15:18:41.239Z\",\n                \"updatedAt\": \"2023-10-14T15:18:41.239Z\"\n            },\n            {\n                \"id\": \"00000000-0000-0000-0000-000000000002\",\n                \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n                \"itemId\": \"00000000-0000-0000-0000-000000000002\",\n                \"quantity\": 10,\n                \"createdAt\": \"2023-10-14T15:18:41.240Z\",\n                \"updatedAt\": \"2023-10-14T15:18:41.240Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 15:07:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Order deleted successfully\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Get Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/items",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:34:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Items retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\n            \"name\": \"Small Egg\",\n            \"size\": \"small\",\n            \"price\": 10.5,\n            \"stock\": 10,\n            \"quantity\": 20,\n            \"createdAt\": \"2023-10-14T15:18:41.226Z\",\n            \"updatedAt\": \"2023-10-14T15:18:41.226Z\"\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000001\",\n            \"name\": \"Medium Egg\",\n            \"size\": \"medium\",\n            \"price\": 15.5,\n            \"stock\": 10,\n            \"quantity\": 20,\n            \"createdAt\": \"2023-10-14T15:18:41.228Z\",\n            \"updatedAt\": \"2023-10-14T15:18:41.228Z\"\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000002\",\n            \"name\": \"Large Egg\",\n            \"size\": \"large\",\n            \"price\": 20.5,\n            \"stock\": 10,\n            \"quantity\": 20,\n            \"createdAt\": \"2023-10-14T15:18:41.229Z\",\n            \"updatedAt\": \"2023-10-14T15:18:41.229Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"size\": \"medium\",\r\n    \"quantity\": 700,\r\n    \"price\": 1.99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test\",\r\n    \"size\": \"medium\",\r\n    \"quantity\": 700,\r\n    \"price\": 1.99\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/items",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:41:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Item created successfully\",\n    \"data\": {\n        \"id\": \"9a7e3817-466d-43fc-aac4-b4d2b70dd540\",\n        \"name\": \"Test\",\n        \"size\": \"medium\",\n        \"price\": 1.99,\n        \"stock\": 700,\n        \"quantity\": 700,\n        \"createdAt\": \"2023-10-15T03:41:05.061Z\",\n        \"updatedAt\": \"2023-10-15T03:41:05.061Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/items/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/items/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:43:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Item retrieved successfully\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"name\": \"Small Egg\",\n        \"size\": \"small\",\n        \"price\": 10.5,\n        \"stock\": 10,\n        \"quantity\": 20,\n        \"createdAt\": \"2023-10-15T03:41:24.146Z\",\n        \"updatedAt\": \"2023-10-15T03:41:24.146Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"size\": \"medium\",\r\n    \"quantity\": 700,\r\n    \"price\": 1.99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/items/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test\",\r\n    \"size\": \"medium\",\r\n    \"quantity\": 700,\r\n    \"price\": 1.99\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/items/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:44:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Item updated successfully\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"name\": \"Test\",\n        \"size\": \"medium\",\n        \"price\": 1.99,\n        \"stock\": 10,\n        \"quantity\": 700,\n        \"createdAt\": \"2023-10-15T03:41:24.146Z\",\n        \"updatedAt\": \"2023-10-15T03:44:22.320Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/items/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/items/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:45:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Item deleted successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Restock",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/items/:id/restock",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items",
+								":id",
+								"restock"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"quantity\": 100\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/items/:id/restock",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items",
+										":id",
+										"restock"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:49:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Item restocked successfully\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"name\": \"Small Egg\",\n        \"size\": \"small\",\n        \"price\": 10.5,\n        \"stock\": 210,\n        \"quantity\": 220,\n        \"createdAt\": \"2023-10-15T03:49:14.307Z\",\n        \"updatedAt\": \"2023-10-15T03:49:19.970Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Item stock record",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/items/:id/history",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"items",
+								":id",
+								"history"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/items/:id/history",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"items",
+										":id",
+										"history"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 03:50:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Item history retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"271f16a3-a423-4ee9-bb66-8e5e64f2482e\",\n            \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n            \"quantity\": 100,\n            \"type\": \"restock\",\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\n            \"createdAt\": \"2023-10-15T03:49:19.968Z\",\n            \"updatedAt\": \"2023-10-15T03:49:19.968Z\"\n        },\n        {\n            \"id\": \"cc768a52-6bde-4e72-b950-6cbf82e026de\",\n            \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n            \"quantity\": 100,\n            \"type\": \"restock\",\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\n            \"createdAt\": \"2023-10-15T03:49:16.142Z\",\n            \"updatedAt\": \"2023-10-15T03:49:16.142Z\"\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000001\",\n            \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n            \"quantity\": 50,\n            \"type\": \"sale\",\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\n            \"createdAt\": \"2023-10-15T03:49:14.335Z\",\n            \"updatedAt\": \"2023-10-15T03:49:14.335Z\"\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\n            \"itemId\": \"00000000-0000-0000-0000-000000000000\",\n            \"quantity\": 50,\n            \"type\": \"restock\",\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\n            \"createdAt\": \"2023-10-15T03:49:14.332Z\",\n            \"updatedAt\": \"2023-10-15T03:49:14.332Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Get Payments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/payments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"payments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 04:57:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Payments retrieved\",\n    \"data\": [\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n            \"amount\": 1000,\n            \"type\": \"cash\",\n            \"status\": \"pending\",\n            \"reason\": null,\n            \"createdAt\": \"2023-10-15T03:49:14.327Z\",\n            \"updatedAt\": \"2023-10-15T03:49:14.327Z\"\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000001\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"orderId\": \"00000000-0000-0000-0000-000000000001\",\n            \"amount\": 100.5,\n            \"type\": \"cash\",\n            \"status\": \"completed\",\n            \"reason\": null,\n            \"createdAt\": \"2023-10-15T03:49:14.330Z\",\n            \"updatedAt\": \"2023-10-15T03:49:14.330Z\"\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000002\",\n            \"userId\": \"00000000-0000-0000-0000-000000000000\",\n            \"orderId\": \"00000000-0000-0000-0000-000000000002\",\n            \"amount\": 1000,\n            \"type\": \"cash\",\n            \"status\": \"pending\",\n            \"reason\": null,\n            \"createdAt\": \"2023-10-15T03:49:14.331Z\",\n            \"updatedAt\": \"2023-10-15T03:49:14.331Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Payment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/payments/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"payments",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 04:57:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Payment retrieved\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"userId\": \"00000000-0000-0000-0000-000000000000\",\n        \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n        \"amount\": 1000,\n        \"type\": \"cash\",\n        \"status\": \"pending\",\n        \"reason\": null,\n        \"createdAt\": \"2023-10-15T03:49:14.327Z\",\n        \"updatedAt\": \"2023-10-15T03:49:14.327Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Payment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/payments/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"payments",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 04:58:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Payment deleted\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Complete payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/payments/:id/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								":id",
+								"complete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/:id/complete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"payments",
+										":id",
+										"complete"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "00000000-0000-0000-0000-000000000000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 05:00:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Payment updated\",\n    \"data\": {\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\n        \"userId\": \"00000000-0000-0000-0000-000000000000\",\n        \"orderId\": \"00000000-0000-0000-0000-000000000000\",\n        \"amount\": 1000,\n        \"type\": \"cash\",\n        \"status\": \"completed\",\n        \"reason\": null,\n        \"createdAt\": \"2023-10-15T04:59:48.090Z\",\n        \"updatedAt\": \"2023-10-15T05:00:27.989Z\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

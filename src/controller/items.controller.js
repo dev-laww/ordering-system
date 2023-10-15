@@ -6,9 +6,9 @@ export default class ItemsController {
     repo = new ItemRepository();
 
     async items(req) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const items = await this.repo.getAll();
 
@@ -16,9 +16,9 @@ export default class ItemsController {
     }
 
     async create(req) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const body = await getBody(req);
 
@@ -29,15 +29,18 @@ export default class ItemsController {
         if (!requestData.success) return Response.badRequest(requestData.error.errors);
 
         const session = await getSession(req);
-        const item = await this.repo.create(requestData.data, session.id);
+        const item = await this.repo.create({
+            ...requestData.data,
+            stock: requestData.data.quantity,
+        }, session.id);
 
         return Response.created('Item created successfully', item);
     }
 
     async item(req, params) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const item = await this.repo.getById(params.id);
 
@@ -47,9 +50,9 @@ export default class ItemsController {
     }
 
     async update(req, params) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const exists = await this.repo.getById(params.id);
 
@@ -66,32 +69,28 @@ export default class ItemsController {
         const session = await getSession(req);
         const item = await this.repo.update(params.id, requestData.data, session.id);
 
-        if (!item) return Response.notFound('Item not found');
-
         return Response.ok('Item updated successfully', item);
     }
 
     async delete(req, params) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const exists = await this.repo.getById(params.id);
 
         if (!exists) return Response.notFound('Item not found');
 
         const session = await getSession(req);
-        const item = await this.repo.delete(params.id, session.id);
+        await this.repo.delete(params.id, session.id);
 
-        if (!item) return Response.notFound('Item not found');
-
-        return Response.ok('Item deleted successfully', item);
+        return Response.ok('Item deleted successfully');
     }
 
     async history(req, params) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const exists = await this.repo.getById(params.id);
 
@@ -103,9 +102,9 @@ export default class ItemsController {
     }
 
     async restock(req, params) {
-        const allowed = isAllowed(req);
+        const allowed = await isAllowed(req);
 
-        if (allowed.stats !== 200) return allowed;
+        if (allowed.status !== 200) return allowed;
 
         const exists = await this.repo.getById(params.id);
 

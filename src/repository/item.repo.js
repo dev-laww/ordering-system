@@ -19,9 +19,13 @@ export default class ItemRepository {
     }
 
     async create(data, createdBy) {
-        let item = await this.prismaClient.item.create({
+        const item = await this.prismaClient.item.create({
             data: data
         });
+
+        console.log(item.id);
+
+        console.log(createdBy)
 
         await this.prismaClient.itemRecord.create({
             data: {
@@ -53,6 +57,9 @@ export default class ItemRepository {
             where: { id },
             data: {
                 stock: {
+                    increment: quantity
+                },
+                quantity: {
                     increment: quantity
                 }
             }

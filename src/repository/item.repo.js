@@ -3,7 +3,7 @@ import prisma from "@lib/prisma";
 export default class ItemRepository {
     prismaClient = prisma;
 
-    async getAll(filters, limit = 50, cursor) {
+    async getAll(filters = undefined, limit = 50, cursor = undefined) {
         return this.prismaClient.item.findMany({
             cursor: cursor,
             take: limit,
@@ -89,5 +89,20 @@ export default class ItemRepository {
         });
 
         return item;
+    }
+
+    async getRecords(itemId, filters = undefined, limit = 50, cursor = undefined) {
+        return this.prismaClient.itemRecord.findMany({
+            cursor: cursor,
+            take: limit,
+            skip: cursor ? 1 : 0,
+            where: {
+                itemId,
+                ...filters
+            },
+            orderBy: {
+                createdAt: "desc"
+            }
+        });
     }
 }

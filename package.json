@@ -11,7 +11,11 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "generate": "plop --plopfile ./.plop/plopfile.js"
+    "generate": "plop --plopfile ./.plop/plopfile.js",
+    "prisma:migrate": "dotenv -e .env.development.local prisma migrate dev",
+    "prisma:seed": "dotenv -e .env.development.local prisma db seed",
+    "prisma:generate": "dotenv -e .env.development.local prisma generate",
+    "prisma:studio": "dotenv -e .env.development.local prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.4.1",

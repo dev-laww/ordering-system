@@ -2,12 +2,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 
 
 export const authOptions = {
-    session: {
-        strategy: 'jwt'
-    },
     providers: [
         CredentialsProvider({
-            name: "Sign in",
             credentials: {
                 email: {
                     label: "Email",
@@ -30,18 +26,19 @@ export const authOptions = {
                 if (!response.ok) return null
 
                 return res.data
-            },
-            callbacks: {
-                async jwt({token, user}) {
-                    return { ...token, ...user }
-                },
-                async session({session, token}) {
-                    session.accessToken = token.accessToken
-                    session.refreshToken = token.refreshToken
-
-                    return session
-                }
             }
         })
-    ]
+    ],
+    callbacks: {
+        jwt: async ({ token, user }) => ({ ...token, ...user }),
+        session: async ({ session, token }) => {
+            const { accessToken, refreshToken, sub, iat, exp, jti, ...user } = token
+
+            session.user = user
+            session.accessToken = accessToken
+            session.refreshToken = refreshToken
+
+            return session
+        }
+    }
 }

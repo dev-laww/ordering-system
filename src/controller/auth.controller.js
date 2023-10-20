@@ -149,8 +149,8 @@ export default class AuthController {
 
         try {
             requestData.data.type === "token" ?
-                await Email.sendToken(user.email, token) :
-                await Email.sendOTP(user.email, token);
+                await Email.sendPasswordResetEmail(user.email, token) :
+                await Email.sendPasswordResetOTP(user.email, token);
         } catch (error) {
             return Response.internalServerError("Failed to send confirmation email");
         }

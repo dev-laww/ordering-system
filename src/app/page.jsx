@@ -1,13 +1,11 @@
 "use client"
 
-import {
-    LoginButton,
-    LogoutButton,
-    ProfileButton,
-    RegisterButton,
-} from "@components/buttons";
+import { LogoutButton, ProfileButton, } from "@components/buttons";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+    const { data: session, status } = useSession();
+
 
     return (
         <main
@@ -19,10 +17,8 @@ export default function Home() {
             }}
         >
             <div>
-                <LoginButton />
-                <RegisterButton />
-                <LogoutButton />
-                <ProfileButton />
+                <LogoutButton/>
+                <ProfileButton/>
             </div>
         </main>
     );

@@ -20,8 +20,6 @@ export default function Orders() {
 
     if (loading || status === 'loading') return <Loading/>;
 
-    console.log(data);
-
     return (
         <>
             <Navigation/>

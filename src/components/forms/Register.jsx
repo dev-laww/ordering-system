@@ -1,19 +1,11 @@
 'use client'
 
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+
+import { Avatar, Box, Button, CircularProgress, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import { IconLock } from '@tabler/icons-react';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { CircularProgress } from "@mui/material";
 
 export default function Register() {
     const [errors, setErrors] = React.useState({})
@@ -32,7 +24,7 @@ export default function Register() {
         setErrors({})
 
         const data = new FormData(event.currentTarget);
-        const credentials ={
+        const credentials = {
             firstName: data.get('firstName'),
             lastName: data.get('lastName'),
             email: data.get('email'),
@@ -88,7 +80,6 @@ export default function Register() {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline/>
             <Box
                 sx={{
                     marginTop: 8,

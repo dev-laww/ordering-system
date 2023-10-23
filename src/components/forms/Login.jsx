@@ -10,10 +10,10 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { IconLock } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/material";
 
 
 export default function SignIn() {
@@ -53,7 +53,7 @@ export default function SignIn() {
 
         const res = await signIn('credentials', { redirect: false, ...credentials })
 
-        if (res.error) setErrors( { email: 'Invalid credentials', password: 'Invalid credentials' })
+        if (res.error) setErrors({ email: 'Invalid credentials', password: 'Invalid credentials' })
 
         setLoading(false)
     };
@@ -106,7 +106,7 @@ export default function SignIn() {
                         sx={{ mt: 3, mb: 2 }}
                         disabled={loading}
                     >
-                        Sign In
+                        {loading ? <CircularProgress size={24}/> : 'Sign In'}
                     </Button>
                     <Grid container>
                         <Grid item xs>

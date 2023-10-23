@@ -13,6 +13,7 @@ import Container from '@mui/material/Container';
 import { IconLock } from '@tabler/icons-react';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/material";
 
 export default function Register() {
     const [errors, setErrors] = React.useState({})
@@ -175,7 +176,7 @@ export default function Register() {
                         sx={{ mt: 3, mb: 2 }}
                         disabled={loading}
                     >
-                        Sign Up
+                        {loading ? <CircularProgress size={24}/> : 'Sign Up'}
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>

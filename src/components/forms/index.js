@@ -1,9 +1,2 @@
-// Import and export all forms
-
-import Login from './login';
-import Register from './register';
-
-export {
-    Login,
-    Register
-};
+export { default as Login } from './Login';
+export { default as Register } from './Register';

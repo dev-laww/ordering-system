@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 
 export default function Orders() {
-    const { data: session, status } = useSession({
+    const { status } = useSession({
         required: true,
         onUnauthenticated() {
             return { redirect: { destination: '/auth/login', permanent: false } }
@@ -22,7 +22,6 @@ export default function Orders() {
 
     return (
         <>
-            <Navigation/>
             <PageContainer title="Orders">
                 <Box
                     sx={{

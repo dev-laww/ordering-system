@@ -16,7 +16,11 @@ export default class OrderRepository {
     async getById(id) {
         return this.prismaClient.order.findUnique({
             where: { id },
-            include: { items: true }
+            include: {
+                items: {
+                    include: { item: true }
+                }, address: true, payment: true
+            }
         });
     }
 

@@ -1,6 +1,18 @@
-import { Table, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Table, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 
-export default function OrderItem({ items }) {
+const OrderItem = ({ item }) => (
+    <TableRow
+        component={Button}
+        href={`/items/${item.item.id}`}
+    >
+        <TableCell>{item.item.name}</TableCell>
+        <TableCell>{item.quantity}</TableCell>
+        <TableCell>{item.item.price}</TableCell>
+        <TableCell>{item.item.price * item.quantity}</TableCell>
+    </TableRow>
+);
+
+export default function OrderItems({ items }) {
     return (
         <Table sx={{ my: 2 }}>
             <TableHead>
@@ -41,14 +53,7 @@ export default function OrderItem({ items }) {
                     </Typography>
                 </TableCell>
             </TableHead>
-            {items.map(item => (
-                <TableRow key={item.id}>
-                    <TableCell>{item.item.name}</TableCell>
-                    <TableCell>{item.quantity}</TableCell>
-                    <TableCell>{item.item.price}</TableCell>
-                    <TableCell>{item.item.price * item.quantity}</TableCell>
-                </TableRow>
-            ))}
+            {items.map(item => <OrderItem key={item.id} item={item}/>)}
         </Table>
     )
 }

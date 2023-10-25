@@ -1,4 +1,6 @@
-import { Chip, TableCell, TableRow, Typography, } from "@mui/material";
+import { TableCell, TableRow, Typography, } from '@mui/material';
+
+import StatusChip from "@components/common/StatusChip";
 
 export default function Order({ order }) {
     return (
@@ -14,33 +16,9 @@ export default function Order({ order }) {
                 </Typography>
             </TableCell>
             <TableCell>
-                <Chip
-                    sx={{
-                        px: "4px",
-                        backgroundColor:
-                            order.status === "completed"
-                                ? "primary.main"
-                                : order.status === "cancelled" ? "error.main" : "warning.main",
-                        color: "#fff",
-                    }}
-                    size="small"
-                    label={
-                        order.status
-                            .charAt(0)
-                            .toUpperCase() +
-                        order.status.slice(1)
-                    }
-                />
+                <StatusChip status={order.status}/>
             </TableCell>
-            <TableCell
-                sx={{
-                    maxWidth: {
-                        xs: 150,
-                        md: 350,
-                        lg: 500,
-                    },
-                }}
-            >
+            <TableCell>
                 <Typography
                     color="textSecondary"
                     variant="subtitle2"

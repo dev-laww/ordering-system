@@ -7,6 +7,7 @@ import PageContainer from "@components/common/PageContainer";
 import { useFetch } from "@lib/hooks";
 import { useSession } from "next-auth/react";
 import OrderItem from "@components/tables/OrderItem";
+import StatusChip from "@components/common/StatusChip";
 
 export default function Order({ params }) {
     const { status } = useSession();
@@ -40,25 +41,11 @@ export default function Order({ params }) {
                     <Divider>
                         <Typography color="gray">Details</Typography>
                     </Divider>
-                    <Typography mt={2}>Status: {
-                        <Chip
-                            sx={{
-                                px: "4px",
-                                backgroundColor:
-                                    order.status === "completed"
-                                        ? "primary.main"
-                                        : order.status === "cancelled" ? "error.main" : "warning.main",
-                                color: "#fff",
-                            }}
-                            size="small"
-                            label={
-                                order.status
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                order.status.slice(1)
-                            }
-                        />
-                    }</Typography>
+                    <Typography mt={2}>
+                        Status: {
+                            <StatusChip status={order.status}/>
+                        }
+                    </Typography>
                     <Typography mt={2}>Total: {order.total}</Typography>
                     <Typography my={2}>Created at: {order.createdAt}</Typography>
                     {order.reason && <Typography my={2}>Reason: {order.reason}</Typography>}

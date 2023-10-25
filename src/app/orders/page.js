@@ -1,12 +1,11 @@
 'use client'
 
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, Typography, } from '@mui/material';
-import { useFetch } from "@lib/hooks";
-import Loading from "@components/Loading";
-import Order from "@components/common/items/Order";
-import Navigation from "@components/common/Navigation";
-import PageContainer from "@components/common/PageContainer";
-import { useSession } from "next-auth/react";
+import { Box, } from '@mui/material';
+import { useFetch } from '@lib/hooks';
+import Loading from '@components/Loading';
+import PageContainer from '@components/common/PageContainer';
+import { useSession } from 'next-auth/react';
+import { default as OrdersTable } from "@components/tables/Orders";
 
 
 export default function Orders() {
@@ -31,59 +30,7 @@ export default function Orders() {
                         flexDirection: "column",
                     }}
                 >
-                    <Table aria-label="simple table" sx={{ mt: 2 }}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    <Typography
-                                        variant="subtitle2"
-                                        color='primary.dark'
-                                        fontWeight={600}
-                                    >
-                                        Date
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography
-                                        variant="subtitle2"
-                                        color='primary.dark'
-                                        fontWeight={600}
-                                    >
-                                        Order Number
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography
-                                        variant="subtitle2"
-                                        color='primary.dark'
-                                        fontWeight={600}
-                                    >
-                                        Status
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography
-                                        variant="subtitle2"
-                                        color='primary.dark'
-                                        fontWeight={600}
-                                    >
-                                        Total
-                                    </Typography>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Boolean(data.data) ? data.data.map((order) => <Order key={order.id} order={order}/>) : (
-                                <TableRow>
-                                    <TableCell>
-                                        <Typography variant="subtitle2">
-                                            No orders found
-                                        </Typography>
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
+                    <OrdersTable orders={data.data}/>
                 </Box>
             </PageContainer>
         </>

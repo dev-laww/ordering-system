@@ -6,8 +6,8 @@ import Loading from "@components/Loading";
 import PageContainer from "@components/common/PageContainer";
 import { useFetch } from "@lib/hooks";
 import { useSession } from "next-auth/react";
-import OrderItem from "@components/tables/OrderItem";
-import StatusChip from "@components/common/StatusChip";
+import { OrderItems } from "@components/tables/";
+import { StatusChip } from "@components/common/";
 
 export default function Order({ params }) {
     const { status } = useSession();
@@ -37,7 +37,7 @@ export default function Order({ params }) {
                     <Divider>
                         <Typography color="gray">Items</Typography>
                     </Divider>
-                    <OrderItem items={order.items}/>
+                    <OrderItems items={order.items}/>
                     <Divider>
                         <Typography color="gray">Details</Typography>
                     </Divider>

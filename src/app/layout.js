@@ -1,4 +1,4 @@
-import Provider from "@components/Provider";
+import { Provider } from "@src/components";
 
 export const metadata = {
     title: 'Ordering System',
@@ -8,7 +8,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-        <body>
+        <body style={{
+            minHeight: "100vh",
+        }}>
         <Provider>
             {children}
         </Provider>

@@ -2,7 +2,7 @@
 
 import { Box, } from '@mui/material';
 import { useFetch } from '@lib/hooks';
-import Loading from '@components/Loading';
+import { Loading } from '@src/components';
 import PageContainer from '@components/common/PageContainer';
 import { useSession } from 'next-auth/react';
 import { default as OrdersTable } from "@components/tables/Orders";
@@ -30,7 +30,7 @@ export default function Orders() {
                         flexDirection: "column",
                     }}
                 >
-                    <OrdersTable orders={data.data}/>
+                    <OrdersTable items={data.data}/>
                 </Box>
             </PageContainer>
         </>

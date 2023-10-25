@@ -1,4 +1,4 @@
-import Navigation from "@components/common/Navigation";
+import { Navigation } from "@components/common";
 
 export const metadata = {
     title: 'Ordering System - Orders',

@@ -21,7 +21,7 @@ export default function PageContainer(
             margin: 3,
             backgroundColor: 'secondary.light'
         }}
-              elevation={5}
+              elevation={1}
               variant={undefined}
         >
             {cardHeading ? (

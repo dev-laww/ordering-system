@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Chip, Divider, Typography } from '@mui/material';
+import { Box, Button, Chip, Divider, Typography } from '@mui/material';
 import { ERROR_CODE } from "@lib/constants";
 import Loading from "@components/Loading";
 import PageContainer from "@components/common/PageContainer";
@@ -10,7 +10,7 @@ import { OrderItems } from "@components/tables/";
 import { StatusChip } from "@components/common/";
 
 export default function Order({ params }) {
-    const { status } = useSession();
+    const { data: session, status } = useSession();
     const [data, loading, error] = useFetch(`/api/orders/${params.id}`, {}, status);
 
     if (loading || status === 'loading' || !Boolean(data.data)) return <Loading/>;
@@ -19,7 +19,6 @@ export default function Order({ params }) {
 
     const { data: order } = data;
 
-    console.log(order);
 
     return (
         <>
@@ -93,6 +92,31 @@ export default function Order({ params }) {
                     <Typography mt={2}>State: {order.address.state}</Typography>
                     <Typography my={2}>Zip: {order.address.zip}</Typography>
                 </Box>
+                {session.user.role === 'admin' && (
+                    <>
+                        <Divider>
+                            <Typography color="gray">User Details</Typography>
+                        </Divider>
+                        <Typography mt={2}>User ID: {order.user.id}</Typography>
+                        <Typography mt={2}>Name: {order.user.firstName} {order.user.lastName}</Typography>
+                        <Typography mt={2}>Email: {order.user.email}</Typography>
+                        <Typography my={2}>Role: {order.user.role}</Typography>
+                        <Divider>
+                            <Typography color="gray">Actions</Typography>
+                        </Divider>
+                        <Box
+                            display='flex'
+                            flexDirection='row'
+                            justifyContent='flex-end'
+                            gap={2}
+                            my={2}
+                        >
+                            <Button variant='contained'>Cancel</Button>
+                            <Button variant='contained'>Mark as completed</Button>
+                            <Button variant='contained'>Mark as paid</Button>
+                        </Box>
+                    </>
+                )}
             </PageContainer>
         </>
     )

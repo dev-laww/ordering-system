@@ -11,10 +11,10 @@ export default class OrdersController {
 
     async orders(req) {
         const allowed = await isAllowed(req);
-        const session = await getSession(req);
 
         if (allowed.status !== 200) return allowed;
 
+        const session = await getSession(req);
         const data = await this.repo.getAll({
             ...(session.role === "user" && { userId: session.id })
         });
@@ -75,10 +75,10 @@ export default class OrdersController {
 
     async order(req, params) {
         const allowed = await isAllowed(req);
-        const { id, role } = await getSession(req);
 
         if (allowed.status !== 200) return allowed;
 
+        const { id, role } = await getSession(req);
         const data = await this.repo.getById(params.id);
 
         if (!data || (id !== data.userId && role !== 'admin')) return Response.notFound("Order not found");
@@ -129,7 +129,7 @@ export default class OrdersController {
 
         if (data.status !== "pending") return Response.badRequest("Cannot cancel order");
 
-        const updated = await this.repo.update(params.id, { status: "completed", reason: requestData.data.reason });
+        const updated = await this.repo.update(params.id, { status: "cancelled", reason: requestData.data.reason });
 
         return Response.ok("Order cancelled", updated);
     }

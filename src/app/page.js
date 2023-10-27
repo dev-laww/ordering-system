@@ -1,30 +1,41 @@
 "use client"
 
-import Navigation from "@components/common/Navigation";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Loading from "@components/Loading";
+import { Loading } from "@src/components";
+import { useFetch } from "@lib/hooks";
+import { ItemCard, Navigation } from "@components/common";
+import { Grid } from "@mui/material";
 
 export default function Home() {
     const { data: session, status } = useSession();
+    const [data, loading, error] = useFetch('/api/items', {}, status);
     const router = useRouter();
 
-    if (status === "loading") return <Loading/>;
-
+    if (status === "loading" || loading) return <Loading/>;
     if (!session) router.push("/auth/login");
+
+    const items = data.data;
 
     return (
         <>
             <Navigation admin={session.user.role === 'admin'}/>
-            <main
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "70vh",
+            <Grid
+                container
+                spacing={2}
+                sx={{
+                    margin: "0 auto",
+                    maxWidth: "1280px",
+                    padding: "0 1rem",
+                    width: "100%",
                 }}
             >
-            </main>
+                {items.map(item => (
+                    <Grid item xs={12} sm={6} md={4} key={item.id}>
+                        <ItemCard item={item}/>
+                    </Grid>
+                ))}
+            </Grid>
         </>
     );
 }

@@ -3,12 +3,23 @@
 import { PageContainer } from "@components/common";
 import { useSession } from "next-auth/react";
 import { useFetch } from "@lib/hooks";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogContent,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField
+} from "@mui/material";
 import { Loading } from "@src/components";
 import { ItemHistory } from "@components/tables";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ERROR_CODE } from "@lib/constants";
+import { Checkout } from "@components/forms";
 
 export default function Item({ params }) {
     const { data: session, status } = useSession();
@@ -16,6 +27,7 @@ export default function Item({ params }) {
     const [history, loadingHistory, errorHistory] = useFetch(`/api/items/${params.id}/history`, {}, status);
     const [buttonLoading, setButtonLoading] = useState({});
     const [edit, setEdit] = useState(false);
+    const [open, setOpen] = useState(false);
     const [restock, setRestock] = useState(false);
     const [input, setInput] = useState({});
     const [errors, setErrors] = useState({});
@@ -172,31 +184,49 @@ export default function Item({ params }) {
                         />
                     )}
 
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }} gap={1}>
 
-                    {admin && (
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }} gap={1}>
-                            <Button onClick={handleDelete} variant="contained" disabled={buttonLoading.delete}>
-                                Delete
-                            </Button>
-                            <Button onClick={handleRestock} variant="contained" disabled={edit}>
-                                {restock ? 'Cancel' : 'Restock'}
-                            </Button>
-                            <Button onClick={handleEdit} variant="contained" disabled={restock}>
-                                {edit ? 'Cancel' : 'Edit'}
-                            </Button>
+                        {admin && (
+                            <>
+                                <Button onClick={handleDelete} variant="contained" disabled={buttonLoading.delete}>
+                                    Delete
+                                </Button>
+                                <Button onClick={handleRestock} variant="contained" disabled={edit}>
+                                    {restock ? 'Cancel' : 'Restock'}
+                                </Button>
+                                <Button onClick={handleEdit} variant="contained" disabled={restock}>
+                                    {edit ? 'Cancel' : 'Edit'}
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    disabled={buttonLoading.save || (!edit && !restock)}
+                                >
+                                    Save
+                                </Button>
+                            </>
+                        )}
+
+                        {!admin && (
                             <Button
                                 variant="contained"
-                                type="submit"
-                                disabled={buttonLoading.save || (!edit && !restock)}
+                                onClick={() => setOpen(true)}
                             >
-                                Save
+                                Checkout
                             </Button>
-
-                        </Box>
-                    )}
+                        )}
+                    </Box>
                 </Box>
             </PageContainer>
-
+            <Dialog
+                open={open}
+                fullWidth
+                onClose={() => setOpen(false)}
+            >
+                <DialogContent>
+                    <Checkout item={item.data}/>
+                </DialogContent>
+            </Dialog>
             {admin && (
                 <PageContainer title='Stock History'>
                     <ItemHistory histories={history.data}/>

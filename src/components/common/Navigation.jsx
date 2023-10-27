@@ -20,7 +20,7 @@ import { signOut } from "next-auth/react";
 import IconButton from '@mui/material/IconButton';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Home', 'Orders', 'History'];
+const pages = ['Home', 'Orders'];
 const settings = ['Profile'];
 
 function Navigation({ admin }) {

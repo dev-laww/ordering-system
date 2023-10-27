@@ -20,6 +20,10 @@ const seederMap = {
 async function seed(func, seeder) {
     for (const data of seeder) {
         try {
+            const exists = await func.findUnique({ where: { id: data.id } });
+
+            if (exists) continue;
+
             await func.create({ data });
         } catch (e) {
             console.error('--- Error seeding ---\n', e);

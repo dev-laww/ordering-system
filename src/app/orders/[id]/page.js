@@ -10,7 +10,7 @@ import { OrderItems } from "@components/tables/";
 import { StatusChip } from "@components/common/";
 import * as React from "react";
 import { useState } from "react";
-import { refreshToken } from "@lib/http";
+import { fetchData } from "@lib/http";
 
 export default function Order({ params }) {
     const { data: session, status } = useSession();
@@ -29,33 +29,16 @@ export default function Order({ params }) {
 
         setButtonLoading(prev => ({ ...prev, cancel: true }));
 
-        let response = await fetch(`/api/orders/${params.id}/cancel`, {
+        const data = await fetchData(`/api/orders/${params.id}/cancel`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': session.accessToken
             },
             body: JSON.stringify({ reason: 'Cancelled by admin' }),
-        });
-        const data = await response.json();
-
-        if (data.message === 'Invalid access token') {
-            // refresh token
-            const accessToken = await refreshToken(session.refreshToken);
-
-            response = await fetch(`/api/orders/${params.id}/cancel`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({ reason: 'Cancelled by admin' }),
-            });
-        }
+        }, session);
 
         setButtonLoading(prev => ({ ...prev, cancel: false }));
-
-        if (!response.ok) return;
 
         if (data.code && data.code === ERROR_CODE.NOT_FOUND) return;
 
@@ -67,33 +50,16 @@ export default function Order({ params }) {
 
         setButtonLoading(prev => ({ ...prev, complete: true }));
 
-        let response = await fetch(`/api/orders/${params.id}/complete`, {
+        const data = await fetchData(`/api/orders/${params.id}/complete`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': session.accessToken
             },
             body: JSON.stringify({ reason: 'Completed by admin' }),
-        });
-        const data = await response.json();
-
-        if (data.message === 'Invalid access token') {
-            // refresh token
-            const accessToken = await refreshToken(session.refreshToken);
-
-            response = await fetch(`/api/orders/${params.id}/complete`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({ reason: 'Completed by admin' }),
-            });
-        }
+        }, session);
 
         setButtonLoading(prev => ({ ...prev, complete: false }));
-
-        if (!response.ok) return;
 
 
         if (data.code && data.code === ERROR_CODE.NOT_FOUND) return;
@@ -106,34 +72,16 @@ export default function Order({ params }) {
 
         setButtonLoading(prev => ({ ...prev, paid: true }));
 
-        let response = await fetch(`/api/payments/${order.payment.id}/complete`, {
+        const data = await fetchData(`/api/payments/${order.payment.id}/complete`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': session.accessToken
             },
             body: JSON.stringify({ reason: 'Paid by admin' }),
-        });
-        const data = await response.json();
-
-        if (data.message === 'Invalid access token') {
-            // refresh token
-            const accessToken = await refreshToken(session.refreshToken);
-
-            response = await fetch(`/api/payments/${order.payment.id}/complete`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({ reason: 'Cancelled by admin' }),
-            });
-        }
-
+        }, session);
 
         setButtonLoading(prev => ({ ...prev, paid: false }));
-
-        if (!response.ok) return;
 
 
         if (data.code && data.code === ERROR_CODE.NOT_FOUND) return;
@@ -237,14 +185,14 @@ export default function Order({ params }) {
                         >
                             <Button
                                 variant='contained'
-                                disabled={!pending || buttonLoading.cancel}
+                                disabled={!pending || buttonLoading.cancel || !order.payment}
                                 onClick={handleCancel}
                             >
                                 {buttonLoading.cancel ? <CircularProgress size={24}/> : 'Cancel'}
                             </Button>
                             <Button
                                 variant='contained'
-                                disabled={!pending || buttonLoading.complete}
+                                disabled={!pending || buttonLoading.complete || !order.payment || order.payment.status !== 'completed'}
                                 onClick={handleComplete}
                             >
                                 {buttonLoading.complete ? <CircularProgress size={24}/> : 'Mark as complete'}

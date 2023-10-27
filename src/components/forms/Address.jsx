@@ -7,13 +7,14 @@ export default function AddressForm() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
+        const data = new FormData(e.currentTarget);
         const payload = {
-            name: formData.get('name'),
-            address1: formData.get('address1'),
-            city: formData.get('city'),
-            state: formData.get('state'),
-            zip: formData.get('zip'),
+            name: data.get('name'),
+            address: data.get('address1'),
+            city: data.get('city'),
+            state: data.get('state'),
+            zip: data.get('zip'),
+            phone: data.get('phone'),
         };
 
         console.log(payload);
@@ -82,6 +83,16 @@ export default function AddressForm() {
                                 label="Zip / Postal code"
                                 fullWidth
                                 autoComplete="postal-code"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                required
+                                id="phone"
+                                name="phone"
+                                label="Phone Number"
+                                fullWidth
+                                autoComplete="tel"
                             />
                         </Grid>
                         <Grid item xs={12}>

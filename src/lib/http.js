@@ -1,6 +1,7 @@
 import { ERROR_CODE, STATUS, STATUS_CODE, COMMON_RESOURCES, USER_RESOURCES } from "@lib/constants";
 import { verifyAccessToken } from "@utils/token";
-
+import { authOptions } from "@lib/auth";
+import { getServerSession } from "next-auth";
 
 const Response = {
     /**
@@ -251,6 +252,27 @@ export async function refreshToken(token) {
     if (!res.ok) return null;
 
     return await res.json().then(data => data.data.accessToken);
+}
+
+export async function fetchData(url, options, session) {
+    const res = await fetch(url, options);
+
+    if (res.status === STATUS_CODE.UNAUTHORIZED && session) {
+        console.log(session)
+        const token = await refreshToken(session.refreshToken);
+
+        if (!token) return null;
+
+        return await fetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    }
+
+    return await res.json();
 }
 
 export default Response;

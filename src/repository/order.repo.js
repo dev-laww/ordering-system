@@ -19,7 +19,10 @@ export default class OrderRepository {
             include: {
                 items: {
                     include: { item: true }
-                }, address: true, payment: true
+                },
+                address: true,
+                payment: true,
+                user: true
             }
         });
     }

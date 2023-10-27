@@ -16,6 +16,24 @@ Ordering system built with Next.js, Prisma, PostgreSQL, and Tailwind CSS.
 
 ## Getting Started
 
+Configuring your email:
+1. Go to [google accounts](https://myaccount.google.com/) page of google and login your test account
+2. Click "Security" on the left side.
+3. Enable 2-Step Verification
+4. Scroll down and click "App Passwords"
+5. Click "Select App"
+6. Click "Other (Custom Name)"
+7. Type any name you want.
+8. Click Generate
+9. Save the 16-character random password.
+
+
+```dotenv
+# save this for later use
+EMAIL_USERNAME="the email of your test google account"
+EMAIL_PASSWORD="the 16 digit random password"
+```
+
 First, clone the repository:
 
 ```bash

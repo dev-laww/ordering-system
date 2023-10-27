@@ -15,7 +15,7 @@ export default function Home() {
 
     return (
         <>
-            <Navigation/>
+            <Navigation admin={session.user.role === 'admin'}/>
             <main
                 style={{
                     display: "flex",

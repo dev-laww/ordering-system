@@ -23,7 +23,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 const pages = ['Home', 'Orders', 'History'];
 const settings = ['Profile'];
 
-function Navigation() {
+function Navigation({ admin }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -137,6 +137,16 @@ function Navigation() {
                                 {page}
                             </Button>
                         ))}
+                        {admin && (
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                component={Link}
+                                href={'/items'}
+                            >
+                                Items
+                            </Button>
+                        )}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>

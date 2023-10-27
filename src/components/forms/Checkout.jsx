@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Box,
     Button,
@@ -10,6 +12,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
+import Image from "next/image";
 import * as React from "react";
 import { useSession } from "next-auth/react";
 import { useFetch } from "@lib/hooks";
@@ -18,7 +21,7 @@ import { Loading } from "@src/components";
 export default function Checkout({ item }) {
     const { data: session, status } = useSession()
     const [errors, setErrors] = React.useState({})
-    const [input, setInput] = React.useState({ address: '', quantity: 1})
+    const [input, setInput] = React.useState({ address: '', quantity: 1, payment: '' })
     const [data, loading, error] = useFetch('/api/profile/addresses', {}, status)
 
     if (status === 'loading' || loading) return <Loading/>;
@@ -56,6 +59,7 @@ export default function Checkout({ item }) {
         const order = {
             userId: session.user.id,
             addressId: input.address,
+            paymentMethod: input.payment,
             items: [{
                 itemId: item.id,
                 quantity: input.quantity
@@ -69,7 +73,6 @@ export default function Checkout({ item }) {
         <Container component="main" maxWidth="xs">
             <Box
                 sx={{
-                    marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -104,15 +107,40 @@ export default function Checkout({ item }) {
                                 value=""
                                 disabled
                             >
-                                Select an address
+                                {addresses ? 'Select an address' : 'No addresses found'}
                             </MenuItem>
-                            {addresses.map(address => (
+                            {addresses && addresses.map(address => (
                                 <MenuItem key={address.id} value={address.id}>
                                     {address.name}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
+                    <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth>
+                        <InputLabel id='payment-label'>Payment method *</InputLabel>
+                        <Select
+                            labelId='payment-label'
+                            label='Payment method *'
+                            value={input.payment}
+                            onChange={e => setInput(prev => ({ ...prev, payment: e.target.value }))}
+                        >
+                            <MenuItem value="" disabled>
+                                Select payment method
+                            </MenuItem>
+                            <MenuItem value='cash'>Cash</MenuItem>
+                            <MenuItem value='ewallet'>GCash</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {input.payment === 'ewallet' && (
+                        <Box sx={{ mt: 2, mb: 2 }}>
+                            <Image
+                                src='/gcash.png'
+                                alt='GCash'
+                                width={120}
+                                height={120}
+                            />
+                        </Box>
+                    )}
                     <Button
                         type="submit"
                         fullWidth

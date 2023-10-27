@@ -104,6 +104,15 @@ function Navigation({ admin }) {
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
+                            {admin && (
+                                <MenuItem
+                                    onClick={handleCloseNavMenu}
+                                    component={Link}
+                                    href={'/items'}
+                                >
+                                    <Typography textAlign="center">Items</Typography>
+                                </MenuItem>
+                            )}
                         </Menu>
                     </Box>
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}/>

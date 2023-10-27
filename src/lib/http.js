@@ -242,4 +242,15 @@ export const isAllowed = async (req) => {
     return Response.forbidden;
 }
 
+export async function refreshToken(token) {
+    const res = await fetch('/api/auth/refresh', {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+    });
+
+    if (!res.ok) return null;
+
+    return await res.json().then(data => data.data.accessToken);
+}
+
 export default Response;

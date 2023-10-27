@@ -99,6 +99,8 @@ export const COMMON_RESOURCES = [
 ];
 
 export const USER_RESOURCES = [
+    'GET/api/orders',
+    'GET/api/orders/:id',
     'POST/api/orders',
     'POST/api/orders/:id/cancel',
 ]

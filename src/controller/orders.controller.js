@@ -1,5 +1,5 @@
 import Validators from "@lib/validator/orders.validator";
-import Response, { getBody, isAllowed } from "@lib/http";
+import Response, { getBody, getSession, isAllowed } from "@lib/http";
 import OrderRepository from "@repository/order.repo";
 import PaymentRepository from "@repository/payment.repo";
 import ItemRepository from "@repository/item.repo";
@@ -11,10 +11,13 @@ export default class OrdersController {
 
     async orders(req) {
         const allowed = await isAllowed(req);
+        const session = await getSession(req);
 
         if (allowed.status !== 200) return allowed;
 
-        const data = await this.repo.getAll();
+        const data = await this.repo.getAll({
+            ...(session.role === "user" && { userId: session.id })
+        });
 
         if (!data.length) return Response.notFound("No orders found");
 
@@ -72,12 +75,13 @@ export default class OrdersController {
 
     async order(req, params) {
         const allowed = await isAllowed(req);
+        const { id, role } = await getSession(req);
 
         if (allowed.status !== 200) return allowed;
 
         const data = await this.repo.getById(params.id);
 
-        if (!data) return Response.notFound("Order not found");
+        if (!data || (id !== data.userId && role !== 'admin')) return Response.notFound("Order not found");
 
         return Response.ok("Order", data);
     }

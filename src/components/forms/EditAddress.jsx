@@ -26,11 +26,17 @@ export default function EditAddress({ address }) {
         setLoading(true);
 
         const data = new FormData(e.currentTarget);
-        console.log(input)
 
         await fetchData(`/api/profile/addresses/${address.id}`, {
             method: 'PUT',
-            body: JSON.stringify(input)
+            body: JSON.stringify({
+                name: data.get('name'),
+                address: data.get('address'),
+                city: data.get('city'),
+                state: data.get('state'),
+                zip: data.get('zip'),
+                phone: data.get('phone'),
+            })
         }, session);
 
         window.location.reload();
@@ -51,11 +57,6 @@ export default function EditAddress({ address }) {
         const { name, value } = e.target
 
         setInput(prev => ({ ...prev, [name]: value }))
-
-        if (value == "") {
-            setErrors(prev => ({ ...prev, [name]: 'This field is required.' }))
-            return
-        }
 
         if (name == "zip" && isNaN(value)) {
             setErrors(prev => ({ ...prev, [name]: 'Must be a number' }))
@@ -92,7 +93,6 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.name}
                                 onChange={handleChange}
-                                helperText={errors.name}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -106,7 +106,6 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.address}
                                 onChange={handleChange}
-                                helperText={errors.address}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -120,7 +119,6 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.city}
                                 onChange={handleChange}
-                                helperText={errors.city}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -132,7 +130,6 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.state}
                                 onChange={handleChange}
-                                helperText={errors.state}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -147,6 +144,7 @@ export default function EditAddress({ address }) {
                                 value={input.zip}
                                 onChange={handleChange}
                                 helperText={errors.zip}
+                                error={Boolean(errors.zip)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -160,7 +158,6 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.phone}
                                 onChange={handleChange}
-                                helperText={errors.phone}
                             />
                         </Grid>
                         <Grid item xs={12}>

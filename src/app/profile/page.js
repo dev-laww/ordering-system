@@ -264,6 +264,7 @@ export default function Profile() {
                                 value={input.confirmPassword}
                                 onChange={onChange}
                                 helperText={errors.confirmPassword}
+                                error={!!errors.confirmPassword}
                             />
                         </Grid>
                     </Grid>

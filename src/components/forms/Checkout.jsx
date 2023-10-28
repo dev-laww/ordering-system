@@ -17,12 +17,14 @@ import * as React from "react";
 import { useSession } from "next-auth/react";
 import { useFetch } from "@lib/hooks";
 import { Loading } from "@src/components";
+import { fetchData } from "@src/lib/http";
 
 export default function Checkout({ item }) {
     const { data: session, status } = useSession()
     const [errors, setErrors] = React.useState({})
     const [input, setInput] = React.useState({ address: '', quantity: 1, payment: '' })
     const [data, loading, error] = useFetch('/api/profile/addresses', {}, status)
+    const [buttonLoading , setButtonLoading] = React.useState(false);
 
     if (status === 'loading' || loading) return <Loading/>;
 
@@ -55,6 +57,7 @@ export default function Checkout({ item }) {
 
     const handleSubmit = async event => {
         event.preventDefault();
+        setButtonLoading(true);
 
         const order = {
             userId: session.user.id,
@@ -66,7 +69,12 @@ export default function Checkout({ item }) {
             }]
         }
 
-        console.log(order)
+        await fetchData('/api/orders', {
+            method: 'POST',
+            body: JSON.stringify(order)
+        }, session);
+
+        window.location.reload();
     }
 
     return (
@@ -81,7 +89,7 @@ export default function Checkout({ item }) {
                 <Typography component="h1" variant="h5">
                     Checkout
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -98,6 +106,7 @@ export default function Checkout({ item }) {
                     <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth>
                         <InputLabel id='address-label'>Address *</InputLabel>
                         <Select
+                            required
                             labelId='address-label'
                             label='Address *'
                             value={input.address}
@@ -119,6 +128,7 @@ export default function Checkout({ item }) {
                     <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth>
                         <InputLabel id='payment-label'>Payment method *</InputLabel>
                         <Select
+                            required
                             labelId='payment-label'
                             label='Payment method *'
                             value={input.payment}
@@ -146,9 +156,9 @@ export default function Checkout({ item }) {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        disabled={loading}
+                        disabled={buttonLoading || loading}
                     >
-                        {loading ? <CircularProgress size={24}/> : 'Checkout'}
+                        {(buttonLoading || loading) ? <CircularProgress size={24}/> : 'Checkout'}
                     </Button>
                 </Box>
             </Box>

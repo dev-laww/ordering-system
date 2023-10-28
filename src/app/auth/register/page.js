@@ -2,7 +2,7 @@ import { Register } from '@components/forms';
 
 
 export const metadata = {
-    title: 'Register',
+    title: 'Ordering System - Register',
     description: 'Register page',
 };
 

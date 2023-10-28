@@ -1,32 +1,69 @@
 'use client'
 
 import * as React from 'react';
-import { Box, Container, Grid, TextField } from '@mui/material/';
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { 
+    Box,
+    Container,
+    Grid,
+    TextField,
+    Button,
+    CircularProgress,
+    Typography
+} from '@mui/material';
+import { fetchData } from '@src/lib/http';
+import { useSession } from 'next-auth/react';
+
 
 export default function EditAddress({ address }) {
+    const { data: session } = useSession();
     const [loading, setLoading] = React.useState(false);
     const [edit, setEdit] = React.useState(false);
     const [input, setInput] = React.useState(address);
+    const [errors, setErrors] = React.useState({});
 
     const handleSubmit = async e => {
         e.preventDefault();
+        setLoading(true);
 
+        const data = new FormData(e.currentTarget);
         console.log(input)
 
-        // modify this to send the payload on address submit
+        await fetchData(`/api/profile/addresses/${address.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(input)
+        }, session);
+
+        window.location.reload();
     }
 
     const handleDelete = async e => {
         e.preventDefault();
+        setLoading(true);
 
-        console.log('delete')
+        await fetchData(`/api/profile/addresses/${address.id}`, {
+            method: 'DELETE'
+        }, session);
+
+        window.location.reload();
     }
 
     const handleChange = e => {
         const { name, value } = e.target
 
         setInput(prev => ({ ...prev, [name]: value }))
+
+        if (value == "") {
+            setErrors(prev => ({ ...prev, [name]: 'This field is required.' }))
+            return
+        }
+
+        if ((name == "zip" || name == "phone") && isNaN(value)) {
+            setErrors(prev => ({ ...prev, [name]: 'Must be a number' }))
+            setInput(prev => ({ ...prev, [name]: '' }))
+            return
+        }
+
+        setErrors(prev => ({ ...prev, [name]: '' }))
     }
 
     return (
@@ -42,7 +79,7 @@ export default function EditAddress({ address }) {
                 <Typography variant="h6" gutterBottom>
                     Address Details
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <TextField
@@ -55,6 +92,7 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.name}
                                 onChange={handleChange}
+                                helperText={errors.name}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -68,6 +106,7 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.address}
                                 onChange={handleChange}
+                                helperText={errors.address}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -81,6 +120,7 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.city}
                                 onChange={handleChange}
+                                helperText={errors.city}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -92,6 +132,7 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.state}
                                 onChange={handleChange}
+                                helperText={errors.state}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -105,6 +146,7 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.zip}
                                 onChange={handleChange}
+                                helperText={errors.zip}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -118,6 +160,7 @@ export default function EditAddress({ address }) {
                                 disabled={!edit}
                                 value={input.phone}
                                 onChange={handleChange}
+                                helperText={errors.phone}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -133,6 +176,7 @@ export default function EditAddress({ address }) {
                                 <Button
                                     variant="contained"
                                     onClick={handleDelete}
+                                    disabled={loading}
                                 >
                                     Delete
                                 </Button>
@@ -142,16 +186,16 @@ export default function EditAddress({ address }) {
                                         setInput(address)
                                         setEdit(!edit)
                                     }}
+                                    disabled={loading}
                                 >
                                     {edit ? 'Cancel' : 'Edit'}
                                 </Button>
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    onClick={handleSubmit}
                                     disabled={loading || !edit}
                                 >
-                                    {loading ? <CircularProgress size={24}/> : 'Save'}
+                                    Save
                                 </Button>
                             </Box>
                         </Grid>

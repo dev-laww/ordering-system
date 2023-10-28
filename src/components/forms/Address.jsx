@@ -1,12 +1,17 @@
 import * as React from 'react';
+import { useSession } from 'next-auth/react';
 import { Box, Container, Grid, TextField } from '@mui/material/';
 import { Button, CircularProgress, Typography } from "@mui/material";
+import { fetchData } from '@src/lib/http';
 
 export default function AddressForm() {
+    const { data: session } = useSession();
     const [loading, setLoading] = React.useState(false);
 
     const handleSubmit = async e => {
         e.preventDefault();
+        setLoading(true);
+
         const data = new FormData(e.currentTarget);
         const payload = {
             name: data.get('name'),
@@ -17,9 +22,12 @@ export default function AddressForm() {
             phone: data.get('phone'),
         };
 
-        console.log(payload);
+        await fetchData('/api/profile/addresses', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }, session);
 
-        // modify this to send the payload on address submit
+        window.location.reload();
     }
 
     return (
@@ -35,7 +43,7 @@ export default function AddressForm() {
                 <Typography variant="h6" gutterBottom>
                     Add a new address
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <TextField

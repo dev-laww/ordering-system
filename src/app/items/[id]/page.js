@@ -20,6 +20,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { ERROR_CODE } from "@lib/constants";
 import { Checkout } from "@components/forms";
+import { fetchData } from "@src/lib/http";
 
 export default function Item({ params }) {
     const { data: session, status } = useSession();
@@ -52,20 +53,45 @@ export default function Item({ params }) {
         e.preventDefault();
 
         const data = new FormData(e.currentTarget);
-        const item = {
+        const item_payload = {
             name: data.get('name'),
             price: input.price,
             size: input.size
         }
 
-        console.log(item)
+        if (restock) {
+            if (input.stock == item.data.stock) return;
 
-        // figure out a way to detect if item action is restock or edit
-        // if restock, then call /api/items/:id/restock
-        // if edit, then call /api/items/:id/edit
-        // set loading
-        // setButtonLoading(prev => ({ ...prev, save: true }));
-        // window.location.reload();
+            const res = await fetchData(`/api/items/${params.id}/restock`, {
+                    method: 'POST',
+                    body: JSON.stringify({ quantity: input.stock - item.data.stock })
+                },
+                session,
+            );
+
+            if (res.code) {
+                setErrors(prev => ({ ...prev, stock: res.message }));
+                return;
+            }
+
+            setButtonLoading(prev => ({ ...prev, save: true }));
+            window.location.reload();
+        } else {
+            const res = await fetchData(`/api/items/${params.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(item_payload)
+                },
+                session,
+            );
+
+            if (res.code) {
+                setErrors(prev => ({ ...prev, price: res.message }));
+                return;
+            }
+
+            setButtonLoading(prev => ({ ...prev, save: true }));
+            window.location.reload();
+        }
     }
 
     const handleEdit = async e => {
@@ -81,7 +107,13 @@ export default function Item({ params }) {
 
         setButtonLoading(prev => ({ ...prev, delete: true }));
 
-        // call /api/items/:id/delete
+        await fetchData(`/api/items/${params.id}`, {
+                method: 'DELETE'
+            },
+            session,
+        );
+
+        window.location.href = '/items';
     }
 
     const handleChange = e => {
@@ -100,7 +132,7 @@ export default function Item({ params }) {
         }
 
         if (name === 'stock' && Number(value) <= item.data.stock) {
-            setErrors(prev => ({ ...prev, [name]: 'Must be greater than stock' }))
+            setErrors(prev => ({ ...prev, [name]: `Must be greater than ${item.data.stock}` }))
             setInput(prev => ({ ...prev, [name]: value }))
             return
         }
@@ -122,7 +154,7 @@ export default function Item({ params }) {
     return (
         <>
             <PageContainer title='Item' subtitle={params.id}>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -180,7 +212,7 @@ export default function Item({ params }) {
                             placeholder={item.data.stock}
                             disabled={!restock}
                             error={Boolean(errors.stock)}
-                            helperText={errors.price}
+                            helperText={errors.stock}
                         />
                     )}
 

@@ -1,27 +1,38 @@
 'use client'
 
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import { useState } from 'react'
+import { fetchData } from '@src/lib/http';
+import { useSession } from 'next-auth/react';
 
 
 export default function AddItem() {
     const [errors, setErrors] = useState({})
     const [priceAndStock, setPriceAndStock] = useState({})
+    const [size, setSize] = useState('');
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const { data: session } = useSession();
 
     const handleSubmit = async e => {
         e.preventDefault()
+        setButtonLoading(true);
 
         const data = new FormData(e.currentTarget);
         const item = {
             name: data.get('name'),
-            size: data.get('size'),
+            size: size,
             quantity: priceAndStock.stock,
             price: priceAndStock.price
         }
 
-        // validate nd set errors if any
+        await fetchData('/api/items', {
+                method: 'POST',
+                body: JSON.stringify(item)
+            },
+            session
+        );
 
-        console.log(item)
+        window.location.reload();
     }
 
     const handleChange = e => {
@@ -43,8 +54,13 @@ export default function AddItem() {
         setPriceAndStock(prev => ({ ...prev, [name]: Number(value) }))
     }
 
+    const handleSelectChange = e => {
+        const { value } = e.target;
+        setSize(value);
+    }
+
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <Box sx={{ mt: 3 }}>
                 <TextField
                     margin="normal"
@@ -57,16 +73,19 @@ export default function AddItem() {
                     error={Boolean(errors.name)}
                     helperText={errors.name}
                 />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="size"
+                <FormControl fullWidth>
+                <InputLabel id="size-label">Size</InputLabel>
+                <Select
+                    labelId="size-label"
                     label="Size"
-                    name="size"
-                    error={Boolean(errors.size)}
-                    helperText={errors.size}
-                />
+                    required
+                    onChange={handleSelectChange}
+                >
+                    <MenuItem value='small'>Small</MenuItem>
+                    <MenuItem value='medium'>Medium</MenuItem>
+                    <MenuItem value='large'>Large</MenuItem>
+                </Select>
+                </FormControl>
                 <TextField
                     margin="normal"
                     required
@@ -98,6 +117,7 @@ export default function AddItem() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    disabled={buttonLoading}
                 >
                     Add Item
                 </Button>

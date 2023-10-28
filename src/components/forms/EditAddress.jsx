@@ -57,7 +57,7 @@ export default function EditAddress({ address }) {
             return
         }
 
-        if ((name == "zip" || name == "phone") && isNaN(value)) {
+        if (name == "zip" && isNaN(value)) {
             setErrors(prev => ({ ...prev, [name]: 'Must be a number' }))
             setInput(prev => ({ ...prev, [name]: '' }))
             return

@@ -74,7 +74,7 @@ export default function Checkout({ item }) {
             body: JSON.stringify(order)
         }, session);
 
-        window.location.reload();
+        window.location.href = '/orders';
     }
 
     return (

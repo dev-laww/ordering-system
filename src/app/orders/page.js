@@ -25,7 +25,7 @@ export default function Orders() {
                         flexDirection: "column",
                     }}
                 >
-                    <OrdersTable items={data.data}/>
+                    <OrdersTable items={data.data && data.data.toReversed()}/>
                 </Box>
             </PageContainer>
         </>

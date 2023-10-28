@@ -17,6 +17,12 @@ export default function EditAddress({ address }) {
         // modify this to send the payload on address submit
     }
 
+    const handleDelete = async e => {
+        e.preventDefault();
+
+        console.log('delete')
+    }
+
     const handleChange = e => {
         const { name, value } = e.target
 
@@ -124,6 +130,12 @@ export default function EditAddress({ address }) {
                                     gap: 2
                                 }}
                             >
+                                <Button
+                                    variant="contained"
+                                    onClick={handleDelete}
+                                >
+                                    Delete
+                                </Button>
                                 <Button
                                     variant="contained"
                                     onClick={() => {

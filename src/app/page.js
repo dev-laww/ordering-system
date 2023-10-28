@@ -10,10 +10,8 @@ import { Grid } from "@mui/material";
 export default function Home() {
     const { data: session, status } = useSession();
     const [data, loading, error] = useFetch('/api/items', {}, status);
-    const router = useRouter();
 
     if (status === "loading" || loading) return <Loading/>;
-    if (!session) router.push("/auth/login");
 
     const items = data.data;
 

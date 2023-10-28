@@ -9,12 +9,7 @@ import { default as OrdersTable } from "@components/tables/Orders";
 
 
 export default function Orders() {
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            return { redirect: { destination: '/auth/login', permanent: false } }
-        }
-    });
+    const { status } = useSession();
     const [data, loading, error] = useFetch('/api/orders', {}, status);
 
     if (loading || status === 'loading') return <Loading/>;

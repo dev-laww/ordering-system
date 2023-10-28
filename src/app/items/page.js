@@ -11,12 +11,7 @@ import { useState } from 'react';
 
 
 export default function Items() {
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            return { redirect: { destination: '/auth/login', permanent: false } }
-        }
-    });
+    const { status } = useSession();
     const [data, loading, error] = useFetch('/api/items', {}, status);
     const [open, setOpen] = useState(false);
 

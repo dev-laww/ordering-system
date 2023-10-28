@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import { useFetch } from "@lib/hooks";
+import { fetchData } from '@src/lib/http';
 import { Address as AddAddress, EditAddress } from "@components/forms";
 
 const Address = ({ address }) => {
@@ -67,6 +68,7 @@ export default function Profile() {
     const [edit, setEdit] = React.useState(false)
     const [addresses, addressLoading, error] = useFetch('/api/profile/addresses', {}, status)
     const [open, setOpen] = React.useState(false)
+    const [errors, setErrors] = React.useState({})
 
     React.useEffect(() => {
         if (!session) return
@@ -83,25 +85,52 @@ export default function Profile() {
     const onChange = e => {
         const { name, value } = e.target
 
+        if (name === 'confirmPassword' && value !== input.newPassword) {
+            setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }))
+            setInput(prev => ({ ...prev, [name]: value }))
+            console.log(value)
+            return
+        }
+
         setInput(prev => ({ ...prev, [name]: value }))
+        setErrors(prev => ({ ...prev, confirmPassword: '' }))
     }
 
     const handleSubmit = async e => {
         e.preventDefault()
 
-        console.log(input)
+        await fetchData('/api/profile', {
+            method: 'PUT',
+            body: JSON.stringify({
+                firstName: input.firstName,
+                lastName: input.lastName
+            })
+        }, session);
     }
 
     const handleChangeSubmit = async e => {
         e.preventDefault()
+        setLoading(true)
 
-        console.log(input)
+        const data = new FormData(e.target);
+        const payload = {
+            oldPassword: data.get('oldPassword'),
+            newPassword: data.get('newPassword'),
+            confirmPassword: data.get('confirmPassword')
+        }
+
+        await fetchData('/api/profile/change-password', {
+            method: 'PUT',
+            body: JSON.stringify(payload)
+        }, session);
+
+        setLoading(false)
     }
 
     return (
         <>
             <PageContainer title="Profile" subtitle={`${session.user.id}\n${session.user.email}`}>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -156,7 +185,6 @@ export default function Profile() {
                         <Button
                             type="submit"
                             variant="contained"
-                            onClick={handleSubmit}
                             disabled={loading || !edit}
                         >
                             {loading ? <CircularProgress size={24}/> : 'Save'}
@@ -199,7 +227,7 @@ export default function Profile() {
             </PageContainer>
 
             <PageContainer title="Change Password">
-                <Box component="form" noValidate onSubmit={handleChangeSubmit} sx={{ mt: 3 }}>
+                <Box component="form" onSubmit={handleChangeSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -235,6 +263,7 @@ export default function Profile() {
                                 id="confirm-password"
                                 value={input.confirmPassword}
                                 onChange={onChange}
+                                helperText={errors.confirmPassword}
                             />
                         </Grid>
                     </Grid>
@@ -250,7 +279,6 @@ export default function Profile() {
                         <Button
                             type="submit"
                             variant="contained"
-                            onClick={handleChangeSubmit}
                             disabled={loading}
                         >
                             Change Password

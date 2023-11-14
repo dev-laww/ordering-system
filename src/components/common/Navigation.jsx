@@ -19,6 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { signOut } from "next-auth/react";
 import IconButton from '@mui/material/IconButton';
 import AdbIcon from '@mui/icons-material/Adb';
+import Image from "next/image";
 
 const pages = ['Home', 'Orders'];
 const settings = ['Profile'];
@@ -46,7 +47,7 @@ function Navigation({ admin }) {
         <AppBar position="sticky">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}/>
+                    <Image src="/logo.png" alt="logo" width={40} height={40} style={{marginRight: 4}}/>
                     <Typography
                         variant="h6"
                         noWrap
@@ -57,12 +58,11 @@ function Navigation({ admin }) {
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        NBC Poultry Farm
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

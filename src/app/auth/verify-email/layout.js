@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Ordering System - Verify Email',
-    description: 'Ordering System - Verify Email'
+    title: 'NBC Poultry Farm - Verify Email',
+    description: 'NBC Poultry Farm - Verify Email'
 }
 
 export default function Layout({ children }) {

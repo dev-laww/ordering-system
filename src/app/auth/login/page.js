@@ -1,7 +1,7 @@
 import { Login } from '@components/forms'
 
 export const metadata = {
-    title: 'Ordering System - Login',
+    title: 'NBC Poultry Farm - Login',
     description: 'Login to your account'
 }
 

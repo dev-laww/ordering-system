@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Ordering System - Forgot Password',
-    description: 'Ordering System - Forgot Password'
+    title: 'NBC Poultry Farm - Forgot Password',
+    description: 'NBC Poultry Farm - Forgot Password'
 }
 
 export default function Layout({ children }) {

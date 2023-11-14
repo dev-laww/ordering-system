@@ -1,8 +1,9 @@
 import { Provider } from "@src/components";
 
 export const metadata = {
-    title: 'Ordering System',
-    description: 'Ordering System',
+    title: 'NBC Poultry Farm',
+    description: 'NBC Poultry Farm',
+    icon: '/favicon.ico',
 }
 
 export default function RootLayout({ children }) {

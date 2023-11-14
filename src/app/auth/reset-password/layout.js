@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Ordering System - Reset Password',
-    description: 'Ordering System - Reset Password'
+    title: 'NBC Poultry Farm - Reset Password',
+    description: 'NBC Poultry Farm - Reset Password'
 }
 
 export default function Layout({ children }) {

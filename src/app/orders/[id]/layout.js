@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Ordering System - Order',
-    description: 'Ordering System - Orders'
+    title: 'NBC Poultry Farm - Order',
+    description: 'NBC Poultry Farm - Orders'
 }
 
 export default function Layout({ children }) {

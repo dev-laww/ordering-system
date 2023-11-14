@@ -3,8 +3,8 @@ import { authOptions } from "@lib/auth";
 import { getServerSession } from "next-auth";
 
 export const metadata = {
-    title: 'Ordering System - Items',
-    description: 'Ordering System - Items'
+    title: 'NBC Poultry Farm - Items',
+    description: 'NBC Poultry Farm - Items'
 }
 
 export default async function Layout({ children }) {

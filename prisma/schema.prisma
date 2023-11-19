@@ -155,6 +155,7 @@ enum ItemSize {
   small
   medium
   large
+  xlarge
 }
 
 enum Role {

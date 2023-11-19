@@ -60,7 +60,7 @@ export default function Item({ params }) {
         }
 
         if (restock) {
-            if (input.stock == item.data.stock) return;
+            if (input.stock === item.data.stock) return;
 
             const res = await fetchData(`/api/items/${params.id}/restock`, {
                     method: 'POST',
@@ -196,6 +196,9 @@ export default function Item({ params }) {
                             </MenuItem>
                             <MenuItem value="large">
                                 Large
+                            </MenuItem>
+                            <MenuItem value="xlarge">
+                                Extra Large
                             </MenuItem>
                         </Select>
                     </FormControl>

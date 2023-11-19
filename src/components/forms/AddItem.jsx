@@ -84,6 +84,7 @@ export default function AddItem() {
                     <MenuItem value='small'>Small</MenuItem>
                     <MenuItem value='medium'>Medium</MenuItem>
                     <MenuItem value='large'>Large</MenuItem>
+                    <MenuItem value='xlarge'>Extra Large</MenuItem>
                 </Select>
                 </FormControl>
                 <TextField

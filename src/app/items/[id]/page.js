@@ -14,6 +14,7 @@ import {
     Select,
     TextField
 } from "@mui/material";
+import Image from "next/image";
 import { Loading } from "@src/components";
 import { ItemHistory } from "@components/tables";
 import * as React from "react";
@@ -154,6 +155,7 @@ export default function Item({ params }) {
     return (
         <>
             <PageContainer title='Item' subtitle={params.id}>
+                <Image src="/egg.jpg" alt="egg" width={350} height={350}/>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"

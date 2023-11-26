@@ -168,6 +168,15 @@ export default function Item({ params }) {
                         autoFocus
                         disabled={!edit}
                     />
+                     <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        label="Stock"
+                        defaultValue={item.data.stock}
+                        autoFocus
+                        disabled
+                    />
                     <TextField
                         margin="normal"
                         required
@@ -175,6 +184,7 @@ export default function Item({ params }) {
                         id="price"
                         label="Price"
                         name="price"
+                        defaultValue={item.data.price}
                         value={input.price}
                         onChange={handleChange}
                         placeholder={item.data.price}
@@ -187,7 +197,7 @@ export default function Item({ params }) {
                         required
                         fullWidth
                         label="Size"
-                        value={input.size}
+                        defaultValue={item.data.size}
                         disabled
                     />
 

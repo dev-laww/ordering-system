@@ -182,28 +182,15 @@ export default function Item({ params }) {
                         error={Boolean(errors.price)}
                         helperText={errors.price}
                     />
-                    <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth disabled={!edit}>
-                        <InputLabel id='size-label'>Size *</InputLabel>
-                        <Select
-                            labelId='size-label'
-                            label='Size *'
-                            value={input.size}
-                            onChange={e => setInput(prev => ({ ...prev, size: e.target.value }))}
-                        >
-                            <MenuItem value="small">
-                                Small
-                            </MenuItem>
-                            <MenuItem value="medium">
-                                Medium
-                            </MenuItem>
-                            <MenuItem value="large">
-                                Large
-                            </MenuItem>
-                            <MenuItem value="xlarge">
-                                Extra Large
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        label="Size"
+                        value={input.size}
+                        disabled
+                    />
+
                     {restock && (
                         <TextField
                             margin="normal"

@@ -17,7 +17,7 @@ export default function ItemCard({ item }) {
                         { item.name }
                     </Typography>
                     <Typography variant="h5" component="div">
-                        { item.price }
+                        ₱ { item.price }
                     </Typography>
                     <Typography variant="body2">
                         { item.size }

@@ -3,17 +3,7 @@
 import { PageContainer } from "@components/common";
 import { useSession } from "next-auth/react";
 import { useFetch } from "@lib/hooks";
-import {
-    Box,
-    Button,
-    Dialog,
-    DialogContent,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField
-} from "@mui/material";
+import { Box, Button, Dialog, DialogContent, InputAdornment, TextField } from "@mui/material";
 import Image from "next/image";
 import { Loading } from "@src/components";
 import { ItemHistory } from "@components/tables";
@@ -25,14 +15,14 @@ import { fetchData } from "@src/lib/http";
 
 export default function Item({ params }) {
     const { data: session, status } = useSession();
-    const [item, loading, error] = useFetch(`/api/items/${params.id}`, {}, status);
-    const [history, loadingHistory, errorHistory] = useFetch(`/api/items/${params.id}/history`, {}, status);
-    const [buttonLoading, setButtonLoading] = useState({});
-    const [edit, setEdit] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [restock, setRestock] = useState(false);
-    const [input, setInput] = useState({});
-    const [errors, setErrors] = useState({});
+    const [ item, loading, error ] = useFetch(`/api/items/${ params.id }`, {}, status);
+    const [ history, loadingHistory, errorHistory ] = useFetch(`/api/items/${ params.id }/history`, {}, status);
+    const [ buttonLoading, setButtonLoading ] = useState({});
+    const [ edit, setEdit ] = useState(false);
+    const [ open, setOpen ] = useState(false);
+    const [ restock, setRestock ] = useState(false);
+    const [ input, setInput ] = useState({});
+    const [ errors, setErrors ] = useState({});
 
     useEffect(() => {
         if (!item?.data) return;
@@ -43,7 +33,7 @@ export default function Item({ params }) {
             price: item.data.price,
             stock: item.data.stock
         }));
-    }, [item]);
+    }, [ item ]);
 
     if (loading || status === 'loading' || loadingHistory) return <Loading/>;
 
@@ -63,7 +53,7 @@ export default function Item({ params }) {
         if (restock) {
             if (input.stock === item.data.stock) return;
 
-            const res = await fetchData(`/api/items/${params.id}/restock`, {
+            const res = await fetchData(`/api/items/${ params.id }/restock`, {
                     method: 'POST',
                     body: JSON.stringify({ quantity: input.stock - item.data.stock })
                 },
@@ -78,7 +68,7 @@ export default function Item({ params }) {
             setButtonLoading(prev => ({ ...prev, save: true }));
             window.location.reload();
         } else {
-            const res = await fetchData(`/api/items/${params.id}`, {
+            const res = await fetchData(`/api/items/${ params.id }`, {
                     method: 'PUT',
                     body: JSON.stringify(item_payload)
                 },
@@ -108,7 +98,7 @@ export default function Item({ params }) {
 
         setButtonLoading(prev => ({ ...prev, delete: true }));
 
-        await fetchData(`/api/items/${params.id}`, {
+        await fetchData(`/api/items/${ params.id }`, {
                 method: 'DELETE'
             },
             session,
@@ -133,7 +123,7 @@ export default function Item({ params }) {
         }
 
         if (name === 'stock' && Number(value) <= item.data.stock) {
-            setErrors(prev => ({ ...prev, [name]: `Must be greater than ${item.data.stock}` }))
+            setErrors(prev => ({ ...prev, [name]: `Must be greater than ${ item.data.stock }` }))
             setInput(prev => ({ ...prev, [name]: value }))
             return
         }
@@ -154,9 +144,9 @@ export default function Item({ params }) {
 
     return (
         <>
-            <PageContainer title='Item' subtitle={params.id}>
-                <Image src="/egg.jpg" alt="egg" width={350} height={350}/>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <PageContainer title='Item' subtitle={ params.id }>
+                <Image src="/egg.jpg" alt="egg" width={ 350 } height={ 350 }/>
+                <Box component="form" onSubmit={ handleSubmit } sx={ { mt: 1 } }>
                     <TextField
                         margin="normal"
                         required
@@ -164,16 +154,16 @@ export default function Item({ params }) {
                         id="name"
                         label="Name"
                         name="name"
-                        defaultValue={item.data.name}
+                        defaultValue={ item.data.name }
                         autoFocus
-                        disabled={!edit}
+                        disabled={ !edit }
                     />
-                     <TextField
+                    <TextField
                         margin="normal"
                         required
                         fullWidth
                         label="Stock"
-                        defaultValue={item.data.stock}
+                        defaultValue={ item.data.stock }
                         autoFocus
                         disabled
                     />
@@ -184,24 +174,27 @@ export default function Item({ params }) {
                         id="price"
                         label="Price"
                         name="price"
-                        defaultValue={item.data.price}
-                        value={input.price}
-                        onChange={handleChange}
-                        placeholder={item.data.price}
-                        disabled={!edit}
-                        error={Boolean(errors.price)}
-                        helperText={errors.price}
+                        defaultValue={ item.data.price }
+                        value={ input.price }
+                        onChange={ handleChange }
+                        placeholder={ item.data.price }
+                        disabled={ !edit }
+                        error={ Boolean(errors.price) }
+                        helperText={ errors.price }
+                        InputProps={ {
+                            startAdornment: <InputAdornment position="start">₱</InputAdornment>,
+                        } }
                     />
                     <TextField
                         margin="normal"
                         required
                         fullWidth
                         label="Size"
-                        defaultValue={item.data.size}
+                        defaultValue={ item.data.size }
                         disabled
                     />
 
-                    {restock && (
+                    { restock && (
                         <TextField
                             margin="normal"
                             required
@@ -209,63 +202,63 @@ export default function Item({ params }) {
                             id="stock"
                             label="Stock"
                             name="stock"
-                            value={input.stock}
-                            onChange={handleChange}
-                            placeholder={item.data.stock}
-                            disabled={!restock}
-                            error={Boolean(errors.stock)}
-                            helperText={errors.stock}
+                            value={ input.stock }
+                            onChange={ handleChange }
+                            placeholder={ item.data.stock }
+                            disabled={ !restock }
+                            error={ Boolean(errors.stock) }
+                            helperText={ errors.stock }
                         />
-                    )}
+                    ) }
 
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }} gap={1}>
+                    <Box sx={ { display: 'flex', justifyContent: 'flex-end', mt: 2 } } gap={ 1 }>
 
-                        {admin && (
+                        { admin && (
                             <>
-                                <Button onClick={handleDelete} variant="contained" disabled={buttonLoading.delete}>
+                                <Button onClick={ handleDelete } variant="contained" disabled={ buttonLoading.delete }>
                                     Delete
                                 </Button>
-                                <Button onClick={handleRestock} variant="contained" disabled={edit}>
-                                    {restock ? 'Cancel' : 'Restock'}
+                                <Button onClick={ handleRestock } variant="contained" disabled={ edit }>
+                                    { restock ? 'Cancel' : 'Restock' }
                                 </Button>
-                                <Button onClick={handleEdit} variant="contained" disabled={restock}>
-                                    {edit ? 'Cancel' : 'Edit'}
+                                <Button onClick={ handleEdit } variant="contained" disabled={ restock }>
+                                    { edit ? 'Cancel' : 'Edit' }
                                 </Button>
                                 <Button
                                     variant="contained"
                                     type="submit"
-                                    disabled={buttonLoading.save || (!edit && !restock)}
+                                    disabled={ buttonLoading.save || (!edit && !restock) }
                                 >
                                     Save
                                 </Button>
                             </>
-                        )}
+                        ) }
 
-                        {!admin && (
+                        { !admin && (
                             <Button
                                 variant="contained"
-                                onClick={() => setOpen(true)}
+                                onClick={ () => setOpen(true) }
                             >
                                 Checkout
                             </Button>
-                        )}
+                        ) }
                     </Box>
                 </Box>
             </PageContainer>
             <Dialog
-                open={open}
+                open={ open }
                 fullWidth
-                onClose={() => setOpen(false)}
+                onClose={ () => setOpen(false) }
             >
                 <DialogContent>
-                    <Checkout item={item.data}/>
+                    <Checkout item={ item.data }/>
                 </DialogContent>
             </Dialog>
-            {admin && (
+            { admin && (
                 <PageContainer title='Stock History'>
-                    <ItemHistory histories={history.data}/>
+                    <ItemHistory histories={ history.data }/>
                 </PageContainer>
-            )}
+            ) }
         </>
     )
 }
